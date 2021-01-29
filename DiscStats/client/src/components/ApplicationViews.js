@@ -1,0 +1,26 @@
+import React, { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { UserContext } from "../providers/UserProvider";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import { Home } from "../pages/Home";
+
+const ApplicationViews = () => {
+    const { isLoggedIn } = useContext(UserContext);
+
+    return (
+        <Switch>
+            <Route path="/" exact>
+                {isLoggedIn ? <Home /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
+            <Route path="/register">
+                <Register />
+            </Route>
+        </Switch>
+    );
+};
+
+export default ApplicationViews;
