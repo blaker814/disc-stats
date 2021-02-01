@@ -28,5 +28,7 @@ namespace DiscStats.Models
         public int DiscTypeId { get; set; }
 
         public DiscType DiscType { get; set; }
+
+        public Boolean IsActive { get; set; }
     }
 }

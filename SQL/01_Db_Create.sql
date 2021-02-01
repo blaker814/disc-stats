@@ -103,7 +103,8 @@ CREATE TABLE [Disc] (
   [Name] nvarchar(50) NOT NULL,
   [Weight] integer,
   [Plastic] nvarchar(50),
-  [DiscTypeId] integer NOT NULL
+  [DiscTypeId] integer NOT NULL,
+  [IsActive] bit NOT NULL
 )
 GO
 

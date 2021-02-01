@@ -42,11 +42,5 @@ namespace DiscStats.Controllers
                 new { firebaseUserId = user.FirebaseUserId },
                 user);
         }
-
-        private User GetCurrentUser()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _repo.GetByFirebaseUserId(firebaseUserId);
-        }
     }
 }

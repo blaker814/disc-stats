@@ -2,6 +2,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import ApplicationViews from "./components/ApplicationViews";
 import { UserProvider } from "./providers/UserProvider";
 import { ToastContainer } from "react-toastify";
+import { Navigation } from "../src/components/Navigation";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +12,7 @@ function App() {
       <ToastContainer position="bottom-right" hideProgressBar />
       <UserProvider>
         <Router>
+          <Navigation />
           <ApplicationViews />
         </Router>
       </UserProvider>

@@ -161,20 +161,20 @@ SET IDENTITY_INSERT [DiscType] OFF
 
 SET IDENTITY_INSERT [Disc] ON
 INSERT INTO [Disc]
-  ([Id], [Name], [Weight], [Plastic], [DiscTypeId], [UserId])
+  ([Id], [Name], [Weight], [Plastic], [DiscTypeId], [UserId], [IsActive])
 VALUES
-  (1, 'Discraft Buzz', 180, 'ESP', 3, 1),
-  (2, 'Discmania Link', 175, 'Exo Hard', 4, 1),
-  (3, 'Discmania Link', 173, 'Exo Soft', 4, 1),
-  (4, 'Discraft Surge', 172, 'ESP', 1, 1),
-  (5, 'Discmania FD', 175, 'S-Line', 2, 1),
-  (6, 'Innova Teebird', 174, 'Champion', 2, 1),
-  (7, 'Innova Firebird', 173, 'Champion Glow', 5, 1),
-  (8, 'Innova Destroyer', 175, 'Star', 1, 1),
-  (9, 'Discraft Meteor', 177, 'Z', 3, 1),
-  (10, 'Discraft Zone', 178, 'ESP', 4, 1),
-  (11, 'Innova Sidewinder', 174, 'Champion', 2, 1),
-  (12, 'Gateway Journey', 167, 'Diamond', 1, 1);
+  (1, 'Discraft Buzz', 180, 'ESP', 3, 1, 1),
+  (2, 'Discmania Link', 175, 'Exo Hard', 4, 1, 1),
+  (3, 'Discmania Link', 173, 'Exo Soft', 4, 1, 1),
+  (4, 'Discraft Surge', 172, 'ESP', 1, 1, 1),
+  (5, 'Discmania FD', 175, 'S-Line', 2, 1, 1),
+  (6, 'Innova Teebird', 174, 'Champion', 2, 1, 1),
+  (7, 'Innova Firebird', 173, 'Champion Glow', 5, 1, 1),
+  (8, 'Innova Destroyer', 175, 'Star', 1, 1, 1),
+  (9, 'Discraft Meteor', 177, 'Z', 3, 1, 1),
+  (10, 'Discraft Zone', 178, 'ESP', 4, 1, 1),
+  (11, 'Innova Sidewinder', 174, 'Champion', 2, 1, 1),
+  (12, 'Gateway Journey', 167, 'Diamond', 1, 1, 1);
 SET IDENTITY_INSERT [Disc] OFF
 
 

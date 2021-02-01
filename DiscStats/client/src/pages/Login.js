@@ -20,7 +20,7 @@ const Login = () => {
             .then((user) => {
                 if (user !== null) {
                     setLoading(false);
-                    toast.info(`Welcome back ${user.name}`);
+                    toast.info(`Welcome back, ${user.name}`);
                     history.push("/");
                 } else {
                     setLoading(false);
