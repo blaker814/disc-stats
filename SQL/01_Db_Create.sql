@@ -45,7 +45,7 @@ GO
 CREATE TABLE [Course] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [Name] nvarchar(50) NOT NULL,
-  [Location] nvarchar(50) NOT NULL,
+  [Location] nvarchar(200) NOT NULL,
   [Description] nvarchar(500)
 )
 GO
@@ -75,25 +75,25 @@ GO
 
 CREATE TABLE [ShotType] (
   [Id] integer PRIMARY KEY identity NOT NULL,
-  [Name] nvarchar(50) NOT NULL
+  [Label] nvarchar(50) NOT NULL
 )
 GO
 
 CREATE TABLE [ShotRange] (
   [Id] integer PRIMARY KEY identity NOT NULL,
-  [Name] nvarchar(50) NOT NULL,
+  [Label] nvarchar(50) NOT NULL,
 )
 GO
 
 CREATE TABLE [ShotSelection] (
   [Id] integer PRIMARY KEY identity NOT NULL,
-  [Name] nvarchar(50) NOT NULL
+  [Label] nvarchar(50) NOT NULL
 )
 GO
 
 CREATE TABLE [QualityOfShot] (
   [Id] integer PRIMARY KEY identity NOT NULL,
-  [Name] nvarchar(50) NOT NULL
+  [Label] nvarchar(50) NOT NULL
 )
 GO
 
@@ -109,7 +109,7 @@ GO
 
 CREATE TABLE [DiscType] (
   [Id] integer PRIMARY KEY identity NOT NULL,
-  [Name] nvarchar(50) NOT NULL
+  [Label] nvarchar(50) NOT NULL
 )
 GO
 

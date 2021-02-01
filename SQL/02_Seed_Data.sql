@@ -100,7 +100,7 @@ SET IDENTITY_INSERT [Hole] OFF
 
 SET IDENTITY_INSERT [ShotType] ON
 INSERT INTO [ShotType]
-  ([Id], [Name])
+  ([Id], [Label])
 VALUES
   (1, 'Backhand'),
   (2, 'Forehand'),
@@ -112,7 +112,7 @@ SET IDENTITY_INSERT [ShotType] OFF
 
 SET IDENTITY_INSERT [ShotRange] ON
 INSERT INTO [ShotRange]
-  ([Id], [Name])
+  ([Id], [Label])
 VALUES
   (1, 'Drive'),
   (2, 'Fairway Drive'),
@@ -124,7 +124,7 @@ SET IDENTITY_INSERT [ShotRange] OFF
 
 SET IDENTITY_INSERT [ShotSelection] ON
 INSERT INTO [ShotSelection]
-  ([Id], [Name])
+  ([Id], [Label])
 VALUES
   (1, 'Hyzer'),
   (2, 'Turnover'),
@@ -139,7 +139,7 @@ SET IDENTITY_INSERT [ShotSelection] OFF
 
 SET IDENTITY_INSERT [QualityOfShot] ON
 INSERT INTO [QualityOfShot]
-  ([Id], [Name])
+  ([Id], [Label])
 VALUES
   (1, 'Good'),
   (2, 'Average'),
@@ -149,7 +149,7 @@ SET IDENTITY_INSERT [QualityOfShot] OFF
 
 SET IDENTITY_INSERT [DiscType] ON
 INSERT INTO [DiscType]
-  ([Id], [Name])
+  ([Id], [Label])
 VALUES
   (1, 'Distance Driver'),
   (2, 'Fairway Driver'),
