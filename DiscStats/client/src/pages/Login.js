@@ -65,7 +65,7 @@ const Login = () => {
                         Sign in
                     </Button>
                 </div>
-                <div className="text-center large mt-5">
+                <div className="text-center mt-5" style={{ fontSize: "16px" }}>
                     Don't have an account?
                     <div>
                         <Link to="/register">Sign up here</Link>

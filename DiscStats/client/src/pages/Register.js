@@ -93,7 +93,7 @@ const Register = () => {
                         Sign Up
                     </Button>
                 </div>
-                <div className="text-center large mt-5">
+                <div className="text-center large mt-5" style={{ fontSize: "16px" }}>
                     Already have an account?
                     <div>
                         <Link to="/login">Log in here</Link>

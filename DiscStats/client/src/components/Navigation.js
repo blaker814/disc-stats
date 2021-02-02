@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faIdCard, faLocationArrow, faBox, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faEllipsisH, faTable, faFlag, faDotCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const tabs = [{
     route: "/home",
@@ -19,15 +19,15 @@ const tabs = [{
     label: "Home"
 }, {
     route: "/scorecards",
-    icon: faIdCard,
+    icon: faTable,
     label: "Scorecards"
 }, {
     route: "/courses",
-    icon: faLocationArrow,
+    icon: faFlag,
     label: "Courses"
 }, {
     route: "/discs",
-    icon: faBox,
+    icon: faDotCircle,
     label: "Discs"
 }]
 
@@ -95,11 +95,23 @@ export const Navigation = () => {
                             </>
                         )}
                 </Nav>
-                {user ? (
-                    <NavbarText className="d-block ml-auto">
+                {user && (
+                    <NavbarText className="d-lg-block d-none ml-auto">
                         Welcome {user.name}
                     </NavbarText>
-                ) : null}
+                )}
+                {user && (
+                    <Nav className="ml-auto mr-3 d-lg-none d-flex" navbar>
+                        <NavItem>
+                            <NavLink onClick={logoutAndReturn}>
+                                <div className="row d-flex flex-column justify-content-center align-items-center">
+                                    <FontAwesomeIcon size="lg" icon={faSignOutAlt} />
+                                    <div className="bottom-tab-label">Logout</div>
+                                </div>
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
             </Navbar>
 
             {/* Bottom Tab Navigator*/}
@@ -118,14 +130,6 @@ export const Navigation = () => {
                                 </NavItem>
                             ))
                         }
-                        <NavItem>
-                            <NavLink onClick={logoutAndReturn}>
-                                <div className="row d-flex flex-column justify-content-center align-items-center">
-                                    <FontAwesomeIcon size="lg" icon={faSignOutAlt} />
-                                    <div className="bottom-tab-label">Logout</div>
-                                </div>
-                            </NavLink>
-                        </NavItem>
                     </Nav>
                 </Navbar>
             )}
