@@ -91,11 +91,11 @@ const Register = () => {
                 <div className="form-group">
                     <Button type="submit" block color="danger" disabled={loading}>
                         Sign Up
-          </Button>
+                    </Button>
                 </div>
-                <div className="text-center small">
+                <div className="text-center large mt-5">
                     Already have an account?
-          <div>
+                    <div>
                         <Link to="/login">Log in here</Link>
                     </div>
                 </div>

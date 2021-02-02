@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faIdCard, faLocationArrow, faBox } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faIdCard, faLocationArrow, faBox, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const tabs = [{
     route: "/home",
@@ -34,7 +34,7 @@ const tabs = [{
 }]
 
 export const Navigation = () => {
-    const { getCurrentUser, logout, isAdmin } = useContext(UserContext);
+    const { getCurrentUser, logout } = useContext(UserContext);
     const user = getCurrentUser();
     const history = useHistory();
 
@@ -48,7 +48,7 @@ export const Navigation = () => {
     return (
         < div >
             {/* Top Bar*/}
-            <Navbar className="navbar-dark bg-primary" expand="md">
+            <Navbar className="navbar-dark bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"
@@ -105,22 +105,32 @@ export const Navigation = () => {
             </Navbar>
 
             {/* Bottom Tab Navigator*/}
-            <Navbar className="fixed-bottom navbar-light bg-light d-block d-lg-none">
-                <Nav className="d-flex flex-row justify-content-around w-100" navbar>
-                    {
-                        tabs.map((tab, index) => (
-                            <NavItem key={`tab-${index}`}>
-                                <NavLink to={tab.route} tag={Link}>
-                                    <div className="row d-flex flex-column justify-content-center align-items-center">
-                                        <FontAwesomeIcon size="lg" icon={tab.icon} />
-                                        <div className="bottom-tab-label">{tab.label}</div>
-                                    </div>
-                                </NavLink>
-                            </NavItem>
-                        ))
-                    }
-                </Nav>
-            </Navbar>
+            {user && (
+                <Navbar className="fixed-bottom navbar-light bg-light d-block d-lg-none">
+                    <Nav className="d-flex flex-row justify-content-around w-100" navbar>
+                        {
+                            tabs.map((tab, index) => (
+                                <NavItem key={`tab-${index}`}>
+                                    <NavLink to={tab.route} tag={Link}>
+                                        <div className="row d-flex flex-column justify-content-center align-items-center">
+                                            <FontAwesomeIcon size="lg" icon={tab.icon} />
+                                            <div className="bottom-tab-label">{tab.label}</div>
+                                        </div>
+                                    </NavLink>
+                                </NavItem>
+                            ))
+                        }
+                        <NavItem>
+                            <NavLink onClick={logoutAndReturn}>
+                                <div className="row d-flex flex-column justify-content-center align-items-center">
+                                    <FontAwesomeIcon size="lg" icon={faSignOutAlt} />
+                                    <div className="bottom-tab-label">Logout</div>
+                                </div>
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
+            )}
         </div >
     );
 };

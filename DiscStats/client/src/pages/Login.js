@@ -63,11 +63,11 @@ const Login = () => {
                 <div className="form-group">
                     <Button type="submit" block color="danger" disabled={loading}>
                         Sign in
-          </Button>
+                    </Button>
                 </div>
-                <div className="text-center small">
+                <div className="text-center large mt-5">
                     Don't have an account?
-          <div>
+                    <div>
                         <Link to="/register">Sign up here</Link>
                     </div>
                 </div>
