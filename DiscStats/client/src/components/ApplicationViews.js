@@ -7,6 +7,7 @@ import { Home } from "../pages/Home";
 import { CourseManager } from "../pages/CourseManager";
 import { DiscManager } from "../pages/DiscManager";
 import { ScorecardManager } from "../pages/ScorecardManager";
+import { DiscForm } from "../pages/DiscForm";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserContext);
@@ -21,6 +22,12 @@ const ApplicationViews = () => {
             </Route>
             <Route path="/discs" exact>
                 {isLoggedIn ? <DiscManager /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/discs/add" exact>
+                {isLoggedIn ? <DiscForm /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/discs/edit/:discId(\d+)" exact>
+                {isLoggedIn ? <DiscForm /> : <Redirect to="/login" />}
             </Route>
             <Route path="/scorecards" exact>
                 {isLoggedIn ? <ScorecardManager /> : <Redirect to="/login" />}

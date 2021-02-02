@@ -49,6 +49,13 @@ namespace DiscStats.Controllers
             return Ok(shots);
         }
 
+        [HttpGet("disc/{id}")]
+        public IActionResult GetByDiscId(int id)
+        {
+            var shots = _shotRepo.GetByDiscId(id);
+            return Ok(shots);
+        }
+
         [HttpPost]
         public IActionResult Post(Shot shot)
         {

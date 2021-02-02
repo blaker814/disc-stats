@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faEllipsisH, faTable, faFlag, faDotCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faTable, faFlag, faDotCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const tabs = [{
     route: "/home",
@@ -46,7 +46,7 @@ export const Navigation = () => {
     return (
         < div >
             {/* Top Bar*/}
-            <Navbar className="navbar-dark bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
+            <Navbar className="navbar-dark fixed-top bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"

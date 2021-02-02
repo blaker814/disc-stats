@@ -45,6 +45,11 @@ namespace DiscStats.Repositories
                 .ToList();
         }
 
+        public List<Shot> GetByDiscId(int id)
+        {
+            return _context.Shot.Where(s => s.DiscId == id).ToList();
+        }
+
         public void Add(Shot shot)
         {
             _context.Add(shot);

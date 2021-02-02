@@ -37,6 +37,25 @@
   }
 }
 
+@media (max-width: 992px) {
+  html { 
+    margin-bottom: 65px 
+  }
+
+  .disc-card {
+    width: 35em !important;
+  }
+}
+
 .bottom-tab-label {
   font-size: 12px;
+}
+
+.card-link {
+  color:#777777;
+}
+
+.card-link:hover {
+  color: #3399f3;
+  text-decoration: none;
 }
