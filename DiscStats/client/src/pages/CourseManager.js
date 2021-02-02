@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Scorecard = () => {
+export const CourseManager = () => {
     return (
         <div className="m-5">
-            <p>Scorecards</p>
+            <p>Courses</p>
         </div>
     );
 };

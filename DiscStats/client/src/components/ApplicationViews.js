@@ -4,9 +4,9 @@ import { UserContext } from "../providers/UserProvider";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { Home } from "../pages/Home";
-import { Course } from "../pages/Course";
-import { Disc } from "../pages/Disc";
-import { Scorecard } from "../pages/Scorecard";
+import { CourseManager } from "../pages/CourseManager";
+import { DiscManager } from "../pages/DiscManager";
+import { ScorecardManager } from "../pages/ScorecardManager";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserContext);
@@ -17,13 +17,13 @@ const ApplicationViews = () => {
                 {isLoggedIn ? <Home /> : <Redirect to="/login" />}
             </Route>
             <Route path="/courses" exact>
-                {isLoggedIn ? <Course /> : <Redirect to="/login" />}
+                {isLoggedIn ? <CourseManager /> : <Redirect to="/login" />}
             </Route>
             <Route path="/discs" exact>
-                {isLoggedIn ? <Disc /> : <Redirect to="/login" />}
+                {isLoggedIn ? <DiscManager /> : <Redirect to="/login" />}
             </Route>
             <Route path="/scorecards" exact>
-                {isLoggedIn ? <Scorecard /> : <Redirect to="/login" />}
+                {isLoggedIn ? <ScorecardManager /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login">
                 <Login />

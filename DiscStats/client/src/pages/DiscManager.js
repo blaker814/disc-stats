@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Disc = () => {
+export const DiscManager = () => {
     return (
         <div className="m-5">
             <p>Discs</p>
