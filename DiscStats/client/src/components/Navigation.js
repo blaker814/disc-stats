@@ -52,11 +52,11 @@ export const Navigation = () => {
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"
-                        src="/quill.png"
+                        src="/disc-logo.png"
                         width="30"
                         height="30"
                         className="mr-1"
-                        alt="Quill Logo"
+                        alt="Disc Stats Logo"
                     />
                     Disc Stats
                 </NavbarBrand>
