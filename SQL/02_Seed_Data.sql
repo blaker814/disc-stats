@@ -118,7 +118,8 @@ VALUES
   (2, 'Fairway Drive'),
   (3, 'Approach'),
   (4, 'Putt'),
-  (5, 'Pitch Out');
+  (5, 'Pitch Out'),
+  (6, 'Tap In');
 SET IDENTITY_INSERT [ShotRange] OFF
 
 

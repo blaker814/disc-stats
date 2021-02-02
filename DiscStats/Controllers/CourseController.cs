@@ -10,6 +10,7 @@ namespace DiscStats.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CourseController : ControllerBase
     {
 

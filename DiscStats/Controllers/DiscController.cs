@@ -14,6 +14,7 @@ namespace DiscStats.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DiscController : ControllerBase
     {
         private readonly IDiscRepository _discRepo;

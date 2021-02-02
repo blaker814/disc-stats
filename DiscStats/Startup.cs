@@ -49,10 +49,18 @@ namespace DiscStats
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IDiscRepository, DiscRepository>();
+            services.AddTransient<IConditionsRepository, ConditionsRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<IDiscRepository, DiscRepository>();
+            services.AddTransient<IDiscTypeRepository, DiscTypeRepository>();
+            services.AddTransient<IHoleRepository, HoleRepository>();
+            services.AddTransient<IQualityOfShotRepository, QualityOfShotRepository>();
             services.AddTransient<IScorecardRepository, ScorecardRepository>();
+            services.AddTransient<IShotRepository, ShotRepository>();
+            services.AddTransient<IShotRangeRepository, ShotRangeRepository>();
+            services.AddTransient<IShotSelectionRepository, ShotSelectionRepository>();
+            services.AddTransient<IShotTypeRepository, ShotTypeRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DiscStats", Version = "v1" });
