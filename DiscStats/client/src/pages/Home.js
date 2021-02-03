@@ -100,6 +100,7 @@ export const Home = () => {
                 <p className="stat">Rounds played: {scorecards.length}</p>
                 <p className="stat">Avg Score: {roundScores.length && roundScores.reduce((acc, cur) => acc + cur) / scorecards.length}</p>
             </div>
+            <hr />
             {scoreBreakdown && <div>
                 <p>Eagles or better: {scoreBreakdown.eagle + scoreBreakdown.albatross + scoreBreakdown.condor}</p>
                 <p>Birdies: {scoreBreakdown.birdie}</p>
@@ -108,6 +109,7 @@ export const Home = () => {
                 <p>Doubles: {scoreBreakdown.double}</p>
                 <p>Triples or worse: {scoreBreakdown.plus}</p>
             </div>}
+            <hr />
             <h4>Recent Rounds</h4>
             <div className="row justify-content-center">
                 {scorecards.slice(0, 3).map(sc => {
