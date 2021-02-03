@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
     Navbar,
@@ -42,6 +42,7 @@ export const Navigation = () => {
             history.push("/login");
         });
     };
+    const location = useLocation();
 
     return (
         < div >
@@ -100,7 +101,7 @@ export const Navigation = () => {
                         Welcome {user.name}
                     </NavbarText>
                 )}
-                {user && (
+                {(user && location.pathname === "/home") && (
                     <Nav className="ml-auto mr-3 d-lg-none d-flex" navbar>
                         <NavItem>
                             <NavLink onClick={logoutAndReturn}>

@@ -41,10 +41,6 @@
   html { 
     margin-bottom: 65px 
   }
-
-  .disc-card {
-    width: 35em !important;
-  }
 }
 
 .bottom-tab-label {
@@ -58,4 +54,12 @@
 .card-link:hover {
   color: #3399f3;
   text-decoration: none;
+}
+
+.mobile-card {
+  width: 19em 
+}
+
+.cancel {
+  font-size: 28px;
 }

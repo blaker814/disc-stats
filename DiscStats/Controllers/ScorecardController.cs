@@ -27,6 +27,13 @@ namespace DiscStats.Controllers
             return Ok(scorecards);
         }
 
+        [HttpGet("course/{id}/{userId}")]
+        public IActionResult GetByCourseId(int id, int userId)
+        {
+            var scorecards = _scorecardRepo.GetByCourseId(id, userId);
+            return Ok(scorecards);
+        }
+
         [HttpPost]
         public IActionResult Post(Scorecard scorecard)
         {

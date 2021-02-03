@@ -1,5 +1,6 @@
 ﻿using DiscStats.Data;
 using DiscStats.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,15 @@ namespace DiscStats.Repositories
 
         public List<Scorecard> GetUserScorecards(int id)
         {
-            return _context.Scorecard.Where(s => s.UserId == id).ToList();
+            return _context.Scorecard
+                .Include(s => s.Course)
+                .Include(s => s.Conditions)
+                .Where(s => s.UserId == id).ToList();
+        }
+
+        public List<Scorecard> GetByCourseId(int id, int userId)
+        {
+            return _context.Scorecard.Where(s => s.CourseId == id && s.UserId == userId).ToList();
         }
 
         public Scorecard GetById(int id)

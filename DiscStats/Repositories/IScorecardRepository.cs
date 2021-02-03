@@ -9,5 +9,6 @@ namespace DiscStats.Repositories
         void Delete(int id);
         Scorecard GetById(int id);
         List<Scorecard> GetUserScorecards(int id);
+        List<Scorecard> GetByCourseId(int id, int userId);
     }
 }

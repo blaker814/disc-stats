@@ -30,6 +30,18 @@ namespace DiscStats.Controllers
             return Ok(discs);
         }
 
+        [HttpGet("edit/{id}")]
+        public IActionResult GetById(int id)
+        {
+            var disc = _discRepo.GetById(id);
+            if (disc == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(disc);
+        }
+
         [HttpPost]
         public IActionResult Post(Disc disc)
         {
