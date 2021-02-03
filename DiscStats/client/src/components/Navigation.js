@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faTable, faFlag, faDotCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const tabs = [{
-    route: "/home",
+    route: "/",
     icon: faHome,
     label: "Home"
 }, {
@@ -59,7 +59,7 @@ export const Navigation = () => {
                     />
                     Disc Stats
                 </NavbarBrand>
-                <Nav className="mr-auto d-lg-flex d-none" navbar>
+                <Nav className="d-lg-flex d-none w-100" navbar>
                     {user ? (
                         <>
                             <NavItem>
@@ -77,7 +77,7 @@ export const Navigation = () => {
                                     Discs
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="ml-auto">
                                 <NavLink onClick={logoutAndReturn}>Logout</NavLink>
                             </NavItem>
                         </>
@@ -96,12 +96,7 @@ export const Navigation = () => {
                             </>
                         )}
                 </Nav>
-                {user && (
-                    <NavbarText className="d-lg-block d-none ml-auto">
-                        Welcome {user.name}
-                    </NavbarText>
-                )}
-                {(user && location.pathname === "/home") && (
+                {(user && location.pathname === "/") && (
                     <Nav className="ml-auto mr-3 d-lg-none d-flex" navbar>
                         <NavItem>
                             <NavLink onClick={logoutAndReturn}>

@@ -57,9 +57,13 @@
 }
 
 .mobile-card {
-  width: 19em 
+  width: 15em 
 }
 
 .cancel {
   font-size: 28px;
+}
+
+.stat {
+  width: 10em;
 }

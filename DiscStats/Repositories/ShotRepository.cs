@@ -19,7 +19,10 @@ namespace DiscStats.Repositories
 
         public List<Shot> GetByUserId(int id)
         {
-            return _context.Shot.Where(s => s.UserId == id).ToList();
+            return _context.Shot
+                .Include(s => s.Hole)
+                .Where(s => s.UserId == id)
+                .ToList();
         }
 
         public Shot GetById(int id)

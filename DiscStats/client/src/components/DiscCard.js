@@ -27,10 +27,10 @@ export const DiscCard = ({ disc }) => {
             <Card className="disc-card bg-light mobile-card">
                 <h5 className="card-header"><strong>{disc.name}</strong></h5>
                 <div className="col-12 py-3 card-body">
-                    <p className="text-justify mx-5"><strong>Weight:</strong> {disc.weight}g</p>
-                    <p className="text-justify mx-5"><strong>Plastic:</strong> {disc.plastic}</p>
-                    <p className="text-justify mx-5"><strong>Type:</strong> {disc.discType.label}</p>
-                    <p className="text-justify mx-5"><strong>Shots recorded:</strong> {discShots.length}</p>
+                    <p className="text-left ml-3"><strong>Weight:</strong> {disc.weight}g</p>
+                    <p className="text-left ml-3"><strong>Plastic:</strong> {disc.plastic}</p>
+                    <p className="text-left ml-3"><strong>Type:</strong> {disc.discType.label}</p>
+                    <p className="text-left ml-3"><strong>Shots recorded:</strong> {discShots.length}</p>
                 </div>
             </Card >
         </Link>

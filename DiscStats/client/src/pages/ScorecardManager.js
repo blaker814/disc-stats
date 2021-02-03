@@ -34,7 +34,7 @@ export const ScorecardManager = () => {
             <Button type="button"
                 block={width < 992}
                 onClick={() => history.push("/scorecards/add")}
-                color="danger">Add Scorecard</Button>
+                color="danger">New Scorecard</Button>
             <div className="row justify-content-center">
                 {
                     scorecards.map(scorecard => {

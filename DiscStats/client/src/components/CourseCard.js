@@ -27,9 +27,9 @@ export const CourseCard = ({ course, userId }) => {
             <Card className="course-card bg-light mobile-card">
                 <h5 className="card-header"><strong>{course.name}</strong></h5>
                 <div className="col-12 py-3 card-body">
-                    <p className="text-justify mx-5"><strong>Location:</strong> {course.location}</p>
-                    <p className="text-left mx-5"><strong>Decription:</strong> {course.description}</p>
-                    <p className="text-justify mx-5"><strong>Times Played:</strong> {timesPlayed.length}</p>
+                    <p className="text-left no wrap ml-3"><strong>Location:</strong> {course.location}</p>
+                    <p className="text-left ml-3"><strong>Decription:</strong> {course.description}</p>
+                    <p className="text-left ml-3"><strong>Times Played:</strong> {timesPlayed.length}</p>
                 </div>
             </Card >
         </Link>
