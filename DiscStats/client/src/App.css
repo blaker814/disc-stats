@@ -60,6 +60,21 @@
   width: 15em 
 }
 
+.course-card {
+  height: 15em;
+}
+
+.description {
+  height: 4.5em;
+  overflow: hidden;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+}
+
 .cancel {
   font-size: 28px;
 }

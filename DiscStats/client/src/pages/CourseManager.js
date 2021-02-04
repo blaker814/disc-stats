@@ -4,6 +4,7 @@ import { CourseCard } from "../components/CourseCard";
 import { Button } from "reactstrap";
 import useWindowDimensions from "../utils/getWindowDimensions";
 import { useHistory } from "react-router-dom";
+import CourseSearch from "../components/CourseSearch";
 
 export const CourseManager = () => {
     const [courses, setCourses] = useState([]);
@@ -27,19 +28,20 @@ export const CourseManager = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
-            <h2>Courses</h2>
-            <div className="row justify-content-center">
-                {
-                    courses.map(course => {
-                        return (
+        <>
+            <CourseSearch onSearch={setCourses} />
+            <div className="container">
+                <h2>Courses</h2>
+                <div className="row justify-content-center">
+                    {
+                        courses.map(course => (
                             <div key={course.id} className="m-4">
                                 <CourseCard course={course} userId={currentUserId} />
                             </div>
-                        )
-                    })
-                }
+                        ))
+                    }
+                </div>
             </div>
-        </div>
+        </>
     );
 };

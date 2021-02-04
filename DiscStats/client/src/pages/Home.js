@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { ScoreBar } from "../components/ScoreBar";
 import { ScorecardCard } from "../components/ScorecardCard";
 import { UserContext } from "../providers/UserProvider";
 import groupBy from "../utils/groupBy"
@@ -98,16 +99,16 @@ export const Home = () => {
             <h2>Welcome {currentUser.name}</h2>
             <div className="row justify-content-center">
                 <p className="stat">Rounds played: {scorecards.length}</p>
-                <p className="stat">Avg Score: {roundScores.length && roundScores.reduce((acc, cur) => acc + cur) / scorecards.length}</p>
+                <p className="stat">Avg Score: {roundScores.length && Math.round(roundScores.reduce((acc, cur) => acc + cur) / scorecards.length)}</p>
             </div>
-            <hr />
-            {scoreBreakdown && <div>
-                <p>Eagles or better: {scoreBreakdown.eagle + scoreBreakdown.albatross + scoreBreakdown.condor}</p>
+            {scoreBreakdown && <div className="w-100" style={{ minWidth: "20em" }}>
+                {/* <p>Eagles or better: {scoreBreakdown.eagle + scoreBreakdown.albatross + scoreBreakdown.condor}</p>
                 <p>Birdies: {scoreBreakdown.birdie}</p>
                 <p>Pars: {scoreBreakdown.par}</p>
                 <p>Bogeys: {scoreBreakdown.bogey}</p>
                 <p>Doubles: {scoreBreakdown.double}</p>
-                <p>Triples or worse: {scoreBreakdown.plus}</p>
+                <p>Triples or worse: {scoreBreakdown.plus}</p> */}
+                <ScoreBar scoreBreakdown={scoreBreakdown} />
             </div>}
             <hr />
             <h4>Recent Rounds</h4>
