@@ -48,6 +48,15 @@ export const Navigation = () => {
         < div >
             {/* Top Bar*/}
             <Navbar className="navbar-dark fixed-top bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
+                {(user && location.pathname.startsWith("/discs/")) && (
+                    <Nav className="mr-auto d-flex d-sm-none" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => history.push("/discs")}>
+                                Cancel
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"

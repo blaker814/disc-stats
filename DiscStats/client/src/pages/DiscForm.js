@@ -161,8 +161,8 @@ export const DiscForm = () => {
     }
 
     return (
-        <div className="container border border-dark my-5 bg-light" style={{ minWidth: "20em", maxWidth: "25em" }}>
-            <Link to={"/discs"} className="row" disabled={isLoading}>
+        <div className={width < 768 ? "container my-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
+            <Link to={"/discs"} className="row d-none d-sm-flex" disabled={isLoading}>
                 <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
             </Link>
             <Form className="p-5 mt-n5" onSubmit={handleSubmit}>
