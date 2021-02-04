@@ -26,7 +26,7 @@ const CourseSearch = ({ onSearch }) => {
     }
 
     return (
-        <Form className={width > 576 ? (width < 768 ? "input-group ml-auto mr-3 my-4 w-50" : "input-group mt-4 ml-auto mr-3 w-25") : "input-group my-4"}
+        <Form className={width > 576 ? (width < 768 ? "input-group ml-auto mr-3 my-4 w-50" : "input-group mt-4 ml-auto mr-3 w-25") : "input-group my-4 mx-3"}
             onSubmit={handleSubmit}
         >
             <Input value={searchTerms}
