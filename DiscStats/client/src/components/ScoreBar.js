@@ -3,8 +3,7 @@ import Chartjs from "chart.js";
 
 const chartConfig = (names, breakdown) => {
     const labels = [...names];
-    const eaglesMinus = breakdown.condor + breakdown.albatross + breakdown.eagle
-    const data = [eaglesMinus, breakdown.birdie, breakdown.par, breakdown.bogey, breakdown.double, breakdown.plus];
+    const data = [breakdown.minus, breakdown.birdie, breakdown.par, breakdown.bogey, breakdown.double, breakdown.plus];
     const backgroundColor = [
         "rgba(51, 153, 243, 0.6)", "rgba(60, 181, 33, 0.6)",
         "rgba(68, 110, 155, 0.6)", "rgba(205, 2, 0, 0.6)",
@@ -35,6 +34,7 @@ const chartConfig = (names, breakdown) => {
                 text: "All Time Score Breakdown",
                 fontSize: 16
             },
+            maintainAspectRatio: false,
             legend: {
                 display: false
             },

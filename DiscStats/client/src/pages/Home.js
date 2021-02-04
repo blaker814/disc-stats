@@ -9,7 +9,7 @@ export const Home = () => {
     const [scorecards, setScorecards] = useState([]);
     const [shots, setShots] = useState([]);
     const [roundScores, setRoundScores] = useState([]);
-    const [scoreBreakdown, setScoreBreakdown] = useState({});
+    const [scoreBreakdown, setScoreBreakdown] = useState();
 
     const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -48,9 +48,7 @@ export const Home = () => {
             const groupByHoles = groupBy(shots, "holeId");
             const groupByRound = groupByHoles.map(hole => groupBy(hole, "scorecardId"));
             const breakdown = {
-                condor: 0,
-                albatross: 0,
-                eagle: 0,
+                minus: 0,
                 birdie: 0,
                 par: 0,
                 bogey: 0,
@@ -63,13 +61,13 @@ export const Home = () => {
                         let par = round[0].hole.par;
                         switch (round.length - par) {
                             case -4:
-                                breakdown.condor = breakdown.condor + 1;
+                                breakdown.minus = breakdown.minus + 1;
                                 break;
                             case -3:
-                                breakdown.albatross = breakdown.albatross + 1;
+                                breakdown.minus = breakdown.minus + 1;
                                 break;
                             case -2:
-                                breakdown.eagle = breakdown.eagle + 1;
+                                breakdown.minus = breakdown.minus + 1;
                                 break;
                             case -1:
                                 breakdown.birdie = breakdown.birdie + 1;
@@ -96,20 +94,16 @@ export const Home = () => {
 
     return (
         <div className="m-5">
-            <h2>Welcome {currentUser.name}</h2>
+            <h3>Welcome {currentUser.name}</h3>
             <div className="row justify-content-center">
                 <p className="stat">Rounds played: {scorecards.length}</p>
                 <p className="stat">Avg Score: {roundScores.length && Math.round(roundScores.reduce((acc, cur) => acc + cur) / scorecards.length)}</p>
             </div>
-            {scoreBreakdown && <div className="w-100" style={{ minWidth: "20em" }}>
-                {/* <p>Eagles or better: {scoreBreakdown.eagle + scoreBreakdown.albatross + scoreBreakdown.condor}</p>
-                <p>Birdies: {scoreBreakdown.birdie}</p>
-                <p>Pars: {scoreBreakdown.par}</p>
-                <p>Bogeys: {scoreBreakdown.bogey}</p>
-                <p>Doubles: {scoreBreakdown.double}</p>
-                <p>Triples or worse: {scoreBreakdown.plus}</p> */}
-                <ScoreBar scoreBreakdown={scoreBreakdown} />
-            </div>}
+            {scoreBreakdown && (
+                <div className="ml-n5" style={{ position: "relative", width: "95vw", height: "18em" }}>
+                    <ScoreBar scoreBreakdown={scoreBreakdown} />
+                </div>
+            )}
             <hr />
             <h4>Recent Rounds</h4>
             <div className="row justify-content-center">
