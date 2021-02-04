@@ -123,7 +123,7 @@ export const CourseDetails = () => {
                     <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
                 </Link>
             </div>
-            <div className="container mt-5">
+            <div className="container mt-4 mt-sm-0">
                 <h3>{course.name}</h3>
                 <div>
                     <p className="text-left"><strong>Location:</strong> {course.location}</p>
