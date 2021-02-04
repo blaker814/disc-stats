@@ -17,6 +17,16 @@ namespace DiscStats.Repositories
             _context = context;
         }
 
+        public List<Course> Get()
+        {
+            return _context.Course.OrderBy(c => c.Name).ToList();
+        }
+
+        public Course GetById(int id)
+        {
+            return _context.Course.FirstOrDefault(c => c.Id == id);
+        }
+
         public List<Course> GetRecentCourses(int userId)
         {
             var recentScorecards = _context.Scorecard

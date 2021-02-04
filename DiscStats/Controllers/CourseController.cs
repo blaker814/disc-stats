@@ -20,7 +20,19 @@ namespace DiscStats.Controllers
             _courseRepo = courseRepo;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_courseRepo.Get());
+        }
+
         [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_courseRepo.GetById(id));
+        }
+
+        [HttpGet("recent/{id}")]
         public IActionResult GetRecent(int id)
         {
             var recentCourses = _courseRepo.GetRecentCourses(id);

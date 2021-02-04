@@ -42,6 +42,7 @@ export const Navigation = () => {
             history.push("/login");
         });
     };
+
     const location = useLocation();
 
     return (
@@ -49,10 +50,32 @@ export const Navigation = () => {
             {/* Top Bar*/}
             <Navbar className="navbar-dark fixed-top bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
                 {(user && location.pathname.startsWith("/discs/")) && (
-                    <Nav className="mr-auto d-flex d-sm-none" navbar>
+                    <Nav className="mr-auto d-flex d-md-none" navbar>
                         <NavItem>
                             <NavLink onClick={() => history.push("/discs")}>
                                 Cancel
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
+                {(user && location.pathname === "/scorecards/courses") && (
+                    <Nav className="mr-auto d-flex d-md-none" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => history.push("/scorecards")}>
+                                Cancel
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
+                {(user && location.pathname.includes("/courses/")) && (
+                    <Nav className="mr-auto d-flex d-md-none" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => {
+                                location.pathname.startsWith("/scorecards") ?
+                                    history.push("/scorecards/courses")
+                                    : history.push("/courses")
+                            }}>
+                                Back
                             </NavLink>
                         </NavItem>
                     </Nav>

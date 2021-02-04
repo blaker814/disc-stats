@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Card } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 
 export const CourseCard = ({ course, userId }) => {
     const { getToken } = useContext(UserContext);
     const [timesPlayed, setTimesPlayed] = useState([]);
+    const location = useLocation();
 
     useEffect(() => {
         getToken().then((token) =>
@@ -23,7 +24,7 @@ export const CourseCard = ({ course, userId }) => {
     }, []);
 
     return (
-        <Link to={`/courses/edit/${course.id}`} className="card-link">
+        <Link to={`${location.pathname}/${course.id}`} className="card-link">
             <Card className="course-card bg-light mobile-card">
                 <h5 className="card-header"><strong>{course.name}</strong></h5>
                 <div className="col-12 py-3 card-body">

@@ -33,7 +33,7 @@ export const ScorecardManager = () => {
             <h2>Scorecards</h2>
             <Button type="button"
                 block={width < 992}
-                onClick={() => history.push("/scorecards/add")}
+                onClick={() => history.push("/scorecards/courses")}
                 color="danger">New Scorecard</Button>
             <div className="row justify-content-center">
                 {
