@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Chartjs from "chart.js";
+import { useParams } from "react-router-dom";
 
-const chartConfig = (names, breakdown) => {
+const chartConfig = (names, breakdown, params) => {
     const labels = [...names];
     const data = [breakdown.minus, breakdown.birdie, breakdown.par, breakdown.bogey, breakdown.double, breakdown.plus];
     const backgroundColor = [
@@ -31,7 +32,7 @@ const chartConfig = (names, breakdown) => {
         options: {
             title: {
                 display: true,
-                text: "All Time Score Breakdown",
+                text: params.courseId ? "Course Scoring Breakdown" : "All Time Score Breakdown",
                 fontSize: 16
             },
             maintainAspectRatio: false,
@@ -53,11 +54,12 @@ const chartConfig = (names, breakdown) => {
 
 export const ScoreBar = ({ scoreBreakdown }) => {
     const chartContainer = useRef(null);
+    const params = useParams();
     const names = ["Eagle -", "Birdie", "Par", "Bogey", "Dbl Bogey", "3+ Bogey"];
 
     useEffect(() => {
         if (chartContainer && chartContainer.current) {
-            new Chartjs(chartContainer.current, chartConfig(names, scoreBreakdown));
+            new Chartjs(chartContainer.current, chartConfig(names, scoreBreakdown, params));
         }
     }, [chartContainer]);
 

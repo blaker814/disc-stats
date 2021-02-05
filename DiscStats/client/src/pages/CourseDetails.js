@@ -6,14 +6,18 @@ import useWindowDimensions from "../utils/getWindowDimensions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import groupBy from "../utils/groupBy";
+import { ScoreBar } from "../components/ScoreBar";
 
 export const CourseDetails = () => {
     const [course, setCourse] = useState({});
     const [holes, setHoles] = useState([]);
     const [scorecards, setScorecards] = useState([]);
     const [shots, setShots] = useState([]);
+    const [shotTotals, setShotTotals] = useState([]);
     const [allConditions, setAllConditions] = useState([]);
     const [conditionsId, setConditionsId] = useState(0);
+    const [scoreBreakdown, setScoreBreakdown] = useState();
     const [par, setPar] = useState();
     const [distance, setDistance] = useState();
     const [average, setAverage] = useState();
@@ -115,7 +119,8 @@ export const CourseDetails = () => {
                     })
                         .then((res) => res.json())
                         .then((parsedShots) => {
-                            setShots([...shots, parsedShots.length]);
+                            setShots([...shots, parsedShots]);
+                            setShotTotals([...shotTotals, parsedShots.length]);
                         })
                 );
             })
@@ -123,14 +128,64 @@ export const CourseDetails = () => {
     }, [scorecards]);
 
     useEffect(() => {
-        if (shots.length && (shots.length === scorecards.length) && par) {
-            const totalShots = shots.reduce((acc, cur) => acc + cur);
-            const roundAverage = totalShots / shots.length;
+        if (shots.length) {
+            const breakdown = {
+                minus: 0,
+                birdie: 0,
+                par: 0,
+                bogey: 0,
+                double: 0,
+                plus: 0
+            };
+
+
+            const groupByHoles = groupBy(shots, "holeId");
+            groupByHoles.map(holeNum => {
+                if (holeNum.length) {
+                    let par = holeNum[0].hole.par;
+                    switch (holeNum.length - par) {
+                        case -4:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -3:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -2:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -1:
+                            breakdown.birdie = breakdown.birdie + 1;
+                            break;
+                        case 0:
+                            breakdown.par = breakdown.par + 1;
+                            break;
+                        case 1:
+                            breakdown.bogey = breakdown.bogey + 1;
+                            break;
+                        case 2:
+                            breakdown.double = breakdown.double + 1;
+                            break;
+                        default:
+                            breakdown.plus = breakdown.plus + 1;
+                            break;
+                    }
+                }
+            })
+            console.log(breakdown)
+            setScoreBreakdown(breakdown)
+        }
+
+    }, [shots])
+
+    useEffect(() => {
+        if (shotTotals.length && (shotTotals.length === scorecards.length) && par) {
+            const totalShots = shotTotals.reduce((acc, cur) => acc + cur);
+            const roundAverage = totalShots / shotTotals.length;
             const totalAverage = Math.round(roundAverage - par);
             setAverage(totalAverage < 0 ? totalAverage : totalAverage === 0 ? "E" : `+${totalAverage}`)
-            setBest(Math.min(shots));
+            setBest(Math.min(shotTotals));
         }
-    }, [shots, par]);
+    }, [shotTotals, par]);
 
     const addScorecard = (scorecard) => {
         getToken().then((token) =>
@@ -185,6 +240,11 @@ export const CourseDetails = () => {
                     <p className="text-left col-4"><strong>Best score:</strong> {scorecards.length ? best : "N/A"}</p>
                 </div>
                 <hr />
+                {scoreBreakdown && (
+                    <div className="ml-n5" style={{ position: "relative", width: "95vw", height: "18em" }}>
+                        <ScoreBar scoreBreakdown={scoreBreakdown} />
+                    </div>
+                )}
                 {location.pathname.includes("scorecards") && (
                     <>
                         <Form className={width > 576 ? (width < 992 ? "my-4 mx-auto w-75" : "mt-4 mx-auto w-25") : "my-4 mx-3"}
@@ -193,7 +253,7 @@ export const CourseDetails = () => {
                             <FormGroup row>
                                 <Label>
                                     Current Conditions
-                            </Label>
+                                </Label>
                                 <Input
                                     type="select"
                                     name="conditionsId"

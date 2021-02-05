@@ -37,7 +37,10 @@ namespace DiscStats.Repositories
 
         public List<Shot> GetByScorecardId(int id)
         {
-            return _context.Shot.Where(s => s.ScorecardId == id).ToList();
+            return _context.Shot
+                .Include(s => s.Hole)
+                .Where(s => s.ScorecardId == id)
+                .ToList();
         }
 
         public List<Shot> GetByCourseId(int id)
