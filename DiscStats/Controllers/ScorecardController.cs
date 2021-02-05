@@ -37,8 +37,9 @@ namespace DiscStats.Controllers
         [HttpPost]
         public IActionResult Post(Scorecard scorecard)
         {
+            scorecard.CreateDateTime = DateTime.Now;
             _scorecardRepo.Add(scorecard);
-            return CreatedAtAction("Get", new { id = scorecard.Id }, scorecard);
+            return Ok(scorecard);
         }
 
         [HttpDelete("{id}")]

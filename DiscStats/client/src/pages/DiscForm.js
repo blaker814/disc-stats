@@ -105,13 +105,12 @@ export const DiscForm = () => {
     };
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         if (parseInt(disc.discTypeId) === 0) {
-            e.preventDefault();
             toast.error("Enter a disc type", { position: "top:center" });
         } else {
             setIsLoading(true);
             if (discId) {
-                e.preventDefault();
                 updateDisc({
                     id: disc.id,
                     name: disc.name,
@@ -122,7 +121,6 @@ export const DiscForm = () => {
                     discTypeId: disc.discTypeId
                 });
             } else {
-                e.preventDefault();
                 addDisc({
                     name: disc.name,
                     weight: disc.weight,

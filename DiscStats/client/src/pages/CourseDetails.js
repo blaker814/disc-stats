@@ -1,17 +1,19 @@
-import { Button } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 import useWindowDimensions from "../utils/getWindowDimensions";
-import { parse } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export const CourseDetails = () => {
     const [course, setCourse] = useState({});
     const [holes, setHoles] = useState([]);
     const [scorecards, setScorecards] = useState([]);
-    const [shots, setShots] = useState([])
+    const [shots, setShots] = useState([]);
+    const [allConditions, setAllConditions] = useState([]);
+    const [conditionsId, setConditionsId] = useState(0);
     const [par, setPar] = useState();
     const [distance, setDistance] = useState();
     const [average, setAverage] = useState();
@@ -20,6 +22,7 @@ export const CourseDetails = () => {
     const { width } = useWindowDimensions();
     const location = useLocation();
     const params = useParams();
+    const history = useHistory();
 
     const currentUserId = JSON.parse(localStorage.getItem("user")).id;
 
@@ -34,6 +37,21 @@ export const CourseDetails = () => {
                 .then((res) => res.json())
                 .then((parsedCourse) => {
                     setCourse(parsedCourse);
+                })
+        );
+    }, []);
+
+    useEffect(() => {
+        getToken().then((token) =>
+            fetch(`/api/conditions`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+                .then((res) => res.json())
+                .then((parsedConditions) => {
+                    setAllConditions(parsedConditions);
                 })
         );
     }, []);
@@ -112,7 +130,35 @@ export const CourseDetails = () => {
             setAverage(totalAverage < 0 ? totalAverage : totalAverage === 0 ? "E" : `+${totalAverage}`)
             setBest(Math.min(shots));
         }
-    }, [shots, par])
+    }, [shots, par]);
+
+    const addScorecard = (scorecard) => {
+        getToken().then((token) =>
+            fetch("/api/scorecard", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(scorecard),
+            })
+                .then(res => res.json())
+                .then(data => history.push(`/scorecards/${data.id}/${holes.find(hole => hole.number === 1).id}`))
+        );
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (parseInt(conditionsId) === 0) {
+            toast.error("Enter conditions", { position: "top:center" });
+        } else {
+            addScorecard({
+                courseId: params.courseId,
+                conditionsId: conditionsId,
+                userId: parseInt(currentUserId)
+            })
+        }
+    }
 
     return (
         <>
@@ -123,7 +169,7 @@ export const CourseDetails = () => {
                     <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
                 </Link>
             </div>
-            <div className="container mt-4 mt-sm-0">
+            <div className="container mt-4 mt-md-0">
                 <h3>{course.name}</h3>
                 <div>
                     <p className="text-left"><strong>Location:</strong> {course.location}</p>
@@ -140,7 +186,34 @@ export const CourseDetails = () => {
                 </div>
                 <hr />
                 {location.pathname.includes("scorecards") && (
-                    <Button color="danger" block={width < 992}>Start Round</Button>
+                    <>
+                        <Form className={width > 576 ? (width < 992 ? "my-4 mx-auto w-75" : "mt-4 mx-auto w-25") : "my-4 mx-3"}
+                            onSubmit={handleSubmit}
+                        >
+                            <FormGroup row>
+                                <Label>
+                                    Current Conditions
+                            </Label>
+                                <Input
+                                    type="select"
+                                    name="conditionsId"
+                                    onChange={(e) => setConditionsId(e.target.value)}
+                                    required="required"
+                                    value={conditionsId}
+                                >
+                                    <option value="0" hidden>Select conditions</option>
+                                    {
+                                        allConditions.map((c) => (
+                                            <option value={c.id} key={c.id}>
+                                                {c.label}
+                                            </option>
+                                        ))
+                                    }
+                                </Input>
+                            </FormGroup>
+                            <Button color="danger" type="submit" block={width < 992}>Start Round</Button>
+                        </Form>
+                    </>
                 )}
             </div>
         </>
