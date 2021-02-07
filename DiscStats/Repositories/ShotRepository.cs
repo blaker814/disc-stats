@@ -32,7 +32,15 @@ namespace DiscStats.Repositories
 
         public List<Shot> GetByHoleId(int id)
         {
-            return _context.Shot.Where(s => s.HoleId == id).ToList();
+            return _context.Shot
+                .Include(h => h.Disc)
+                .Include(h => h.ShotSelection)
+                .Include(h => h.ShotType)
+                .Include(h => h.ShotRange)
+                .Include(h => h.QualityOfShot)
+                .Where(s => s.HoleId == id)
+                .OrderByDescending(s => s.Id)
+                .ToList();
         }
 
         public List<Shot> GetByScorecardId(int id)

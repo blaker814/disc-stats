@@ -10,6 +10,7 @@ import { ScorecardManager } from "../pages/ScorecardManager";
 import { DiscForm } from "../pages/DiscForm";
 import { CourseDetails } from "../pages/CourseDetails";
 import { HoleDetails } from "../pages/HoleDetails";
+import { ShotForm } from "../pages/ShotForm";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserContext);
@@ -45,6 +46,9 @@ const ApplicationViews = () => {
             </Route>
             <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)" exact>
                 {isLoggedIn ? <HoleDetails /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/shot" exact>
+                {isLoggedIn ? <ShotForm /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login">
                 <Login />

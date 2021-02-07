@@ -27,7 +27,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
 
     useEffect(() => {
         getToken().then((token) =>
-            fetch(`/api/hole/${scorecard.courseId}`, {
+            fetch(`/api/hole/course/${scorecard.courseId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

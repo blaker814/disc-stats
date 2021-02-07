@@ -20,7 +20,7 @@ namespace DiscStats.Controllers
             _holeRepo = holeRepo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("course/{id}")]
         public IActionResult GetHolesByCourseId(int id)
         {
             var courseHoles = _holeRepo.GetHolesByCourseId(id);
@@ -31,6 +31,19 @@ namespace DiscStats.Controllers
             }
 
             return Ok(courseHoles);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var hole = _holeRepo.GetById(id);
+
+            if(hole == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(hole);
         }
     }
 }

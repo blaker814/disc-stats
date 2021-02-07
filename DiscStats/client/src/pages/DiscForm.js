@@ -21,7 +21,7 @@ export const DiscForm = () => {
     const userId = JSON.parse(localStorage.getItem("user")).id;
 
     //get Disc
-    const getDiscbyId = () => {
+    const getDiscById = () => {
         getToken().then((token) =>
             fetch(`/api/disc/edit/${discId}`, {
                 method: "GET",
@@ -44,7 +44,7 @@ export const DiscForm = () => {
 
     useEffect(() => {
         if (discId) {
-            getDiscbyId();
+            getDiscById();
             setIsLoading(false);
         } else {
             setIsLoading(false);
@@ -151,7 +151,7 @@ export const DiscForm = () => {
                 <>
                     <h1>This is not your disc to edit</h1>
                     <Button>
-                        <Link to={"/myDisc"}>Go Back</Link>
+                        <Link to={"/discs"}>Go Back</Link>
                     </Button>
                 </>
             );

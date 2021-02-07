@@ -6,5 +6,6 @@ namespace DiscStats.Repositories
     public interface IHoleRepository
     {
         List<Hole> GetHolesByCourseId(int id);
+        Hole GetById(int id);
     }
 }

@@ -21,6 +21,18 @@ namespace DiscStats.Controllers
             _shotRepo = shotRepo;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var shot = _shotRepo.GetById(id);
+            if (shot == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(shot);
+        }
+
         [HttpGet("user/{id}")]
         public IActionResult GetByUserId(int id)
         {

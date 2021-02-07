@@ -144,7 +144,8 @@ INSERT INTO [QualityOfShot]
 VALUES
   (1, 'Good'),
   (2, 'Average'),
-  (3, 'Bad');
+  (3, 'Bad'),
+  (4, 'Out of Bounds');
 SET IDENTITY_INSERT [QualityOfShot] OFF
 
 
