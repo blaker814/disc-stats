@@ -37,6 +37,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByUserId(int id)
         {
             var shots = _shotRepo.GetByUserId(id);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 
@@ -44,6 +49,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByCourseId(int id)
         {
             var shots = _shotRepo.GetByCourseId(id);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 
@@ -51,6 +61,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByScorecardId(int id)
         {
             var shots = _shotRepo.GetByScorecardId(id);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 
@@ -58,6 +73,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByHoleId(int id)
         {
             var shots = _shotRepo.GetByHoleId(id);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 
@@ -65,6 +85,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByHoleAndScorecardId(int id, int scorecardId)
         {
             var shots = _shotRepo.GetByHoleAndScorecardId(id, scorecardId);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 
@@ -72,6 +97,11 @@ namespace DiscStats.Controllers
         public IActionResult GetByDiscId(int id)
         {
             var shots = _shotRepo.GetByDiscId(id);
+            if (shots == null)
+            {
+                return NotFound();
+            }
+
             return Ok(shots);
         }
 

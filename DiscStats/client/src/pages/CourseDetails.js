@@ -6,15 +6,18 @@ import useWindowDimensions from "../utils/getWindowDimensions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import groupBy from "../utils/groupBy";
 
 export const CourseDetails = () => {
     const [course, setCourse] = useState({});
     const [holes, setHoles] = useState([]);
     const [scorecards, setScorecards] = useState([]);
-    const [shotTotals, setShotTotals] = useState([]);
+    const [shots, setShots] = useState([]);
     const [allConditions, setAllConditions] = useState([]);
     const [conditionsId, setConditionsId] = useState(0);
     const [par, setPar] = useState();
+    const [scores, setScores] = useState([]);
+    const [isComplete, setIsComplete] = useState(false)
     const [distance, setDistance] = useState();
     const [average, setAverage] = useState();
     const [best, setBest] = useState();
@@ -38,20 +41,17 @@ export const CourseDetails = () => {
                 .then((parsedCourse) => {
                     setCourse(parsedCourse);
                 })
-        );
-    }, []);
-
-    useEffect(() => {
-        getToken().then((token) =>
-            fetch(`/api/conditions`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then((res) => res.json())
-                .then((parsedConditions) => {
-                    setAllConditions(parsedConditions);
+                .then(() => {
+                    return fetch(`/api/conditions`, {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then((parsedConditions) => {
+                            setAllConditions(parsedConditions);
+                        })
                 })
         );
     }, []);
@@ -59,34 +59,41 @@ export const CourseDetails = () => {
     useEffect(() => {
         if (course.id) {
             getToken().then((token) =>
-                fetch(`/api/hole/course/${params.courseId}`, {
+                fetch(`/api/shot/course/${course.id}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 })
                     .then((res) => res.json())
-                    .then((parsedHoles) => {
-                        setHoles(parsedHoles);
+                    .then((parsedShots) => {
+                        setShots(parsedShots);
                     })
-            );
-        }
-    }, [course]);
-
-    useEffect(() => {
-        if (course.id) {
-            getToken().then((token) =>
-                fetch(`/api/scorecard/course/${params.courseId}/${currentUserId}`, {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                    .then((res) => res.json())
-                    .then((parsedScorecards) => {
-                        setScorecards(parsedScorecards);
+                    .then(() => {
+                        return fetch(`/api/scorecard/course/${params.courseId}/${currentUserId}`, {
+                            method: "GET",
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                            .then((res) => res.json())
+                            .then((parsedScorecards) => {
+                                setScorecards(parsedScorecards);
+                            })
                     })
-            );
+                    .then(() => {
+                        return fetch(`/api/hole/course/${params.courseId}`, {
+                            method: "GET",
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                            .then((res) => res.json())
+                            .then((parsedHoles) => {
+                                setHoles(parsedHoles);
+                            })
+                    })
+            )
         }
     }, [course]);
 
@@ -104,33 +111,48 @@ export const CourseDetails = () => {
     }, [holes]);
 
     useEffect(() => {
-        if (scorecards.length) {
-            scorecards.map(scorecard => {
-                getToken().then((token) =>
-                    fetch(`/api/shot/scorecard/${scorecard.id}`, {
-                        method: "GET",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
-                        .then((res) => res.json())
-                        .then((parsedShots) => {
-                            setShotTotals([...shotTotals, parsedShots.length]);
-                        })
-                );
+        if (shots.length && holes.length && !scores.length) {
+            const shotsPerScorecard = groupBy(shots, "scorecardId")
+            const roundScores = shotsPerScorecard.map(scorecardShots => {
+                if (scorecardShots) {
+                    return findScore(scorecardShots)
+                }
+                return null
             })
+            const filteredScores = roundScores.filter(rs => rs !== null)
+            setScores(filteredScores);
         }
-    }, [scorecards]);
+    }, [shots, holes]);
 
     useEffect(() => {
-        if (shotTotals.length && (shotTotals.length === scorecards.length) && par) {
-            const totalShots = shotTotals.reduce((acc, cur) => acc + cur);
-            const roundAverage = totalShots / shotTotals.length;
-            const totalAverage = Math.round(roundAverage - par);
+        if (scores.length && scores.length === scorecards.length) {
+            const totalAverage = Math.round(scores.reduce((acc, cur) => acc + cur) / scores.length);
+            const bestScore = Math.min(...scores)
             setAverage(totalAverage < 0 ? totalAverage : totalAverage === 0 ? "E" : `+${totalAverage}`)
-            setBest(Math.min(shotTotals));
+            setBest(bestScore < 0 ? bestScore : bestScore === 0 ? "E" : `+${bestScore}`);
         }
-    }, [shotTotals, par]);
+    }, [scores])
+
+    const findScore = (scorecardShots) => {
+        console.log(scorecardShots)
+        let totalScore = 0;
+        let playedAllHoles = holes.every(hole => {
+            let shotsForHole = scorecardShots.filter(ss => ss.holeId === hole.id)
+            if (shotsForHole.length) {
+                let penaltyStrokes = 0;
+                shotsForHole.forEach(shot => {
+                    if (shot.qualityOfShotId === 4) {
+                        penaltyStrokes = penaltyStrokes + 1
+                    }
+                })
+                let holeScore = shotsForHole.length + penaltyStrokes - hole.par;
+                totalScore = totalScore + holeScore;
+            }
+            return shotsForHole.length > 0;
+        });
+        setIsComplete(playedAllHoles);
+        return totalScore;
+    }
 
     const addScorecard = (scorecard) => {
         getToken().then((token) =>

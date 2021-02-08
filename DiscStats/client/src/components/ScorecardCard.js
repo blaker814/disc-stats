@@ -9,7 +9,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
     const [scorecardShots, setScorecardShots] = useState([]);
     const [holes, setHoles] = useState([]);
     const [score, setScore] = useState(0);
-    const [complete, setComplete] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
 
     useEffect(() => {
         getToken().then((token) =>
@@ -49,7 +49,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
     }, [holes, scorecardShots])
 
     useEffect(() => {
-        if (score) {
+        if (score && roundScores) {
             setRoundScores([...roundScores, score])
         }
     }, [score])
@@ -70,7 +70,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
             }
             return shotsForHole.length > 0;
         });
-        setComplete(playedAllHoles);
+        setIsComplete(playedAllHoles);
         setScore(totalScore);
     }
 
@@ -81,7 +81,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
                 <div className="col-12 py-3 card-body">
                     <p className="text-left ml-3"><strong>Date:</strong> {formatDate(scorecard.createDateTime)}</p>
                     <p className="text-left ml-3"><strong>Conditions:</strong> {scorecard.conditions.label}</p>
-                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`} {!complete && "(Partial Round)"}</p>
+                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`} {!isComplete && "(Partial Round)"}</p>
                 </div>
             </Card >
         </Link>

@@ -89,6 +89,7 @@ export const HoleDetails = () => {
                         <p className="text-left mx-3"><strong>Last throw:</strong> {lastDrive.disc.name} {lastDrive.shotType.label} {lastDrive.shotSelection.label}</p>
                         <p className="text-left"><strong>Result:</strong> {lastDrive.qualityOfShot.label}</p>
                     </div>
+                    <hr />
                 </>
             }
             <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot`)}>Start Hole</Button><br />
