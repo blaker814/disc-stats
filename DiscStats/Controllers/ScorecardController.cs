@@ -20,7 +20,7 @@ namespace DiscStats.Controllers
             _scorecardRepo = scorecardRepo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("user/{id}")]
         public IActionResult GetUserScorecards(int id)
         {
             var scorecards = _scorecardRepo.GetUserScorecards(id);
@@ -32,6 +32,18 @@ namespace DiscStats.Controllers
         {
             var scorecards = _scorecardRepo.GetByCourseId(id, userId);
             return Ok(scorecards);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var scorecard = _scorecardRepo.GetById(id);
+            if (scorecard == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(scorecard);
         }
 
         [HttpPost]

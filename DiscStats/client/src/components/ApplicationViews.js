@@ -11,6 +11,8 @@ import { DiscForm } from "../pages/DiscForm";
 import { CourseDetails } from "../pages/CourseDetails";
 import { HoleDetails } from "../pages/HoleDetails";
 import { ShotForm } from "../pages/ShotForm";
+import { HoleOverview } from "../pages/HoleOverview";
+import { RoundOverview } from "../pages/RoundOverview";
 
 const ApplicationViews = () => {
     const { isLoggedIn } = useContext(UserContext);
@@ -49,6 +51,15 @@ const ApplicationViews = () => {
             </Route>
             <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/shot" exact>
                 {isLoggedIn ? <ShotForm /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/:shotId(\d+)" exact>
+                {isLoggedIn ? <ShotForm /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/overview" exact>
+                {isLoggedIn ? <HoleOverview /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/overview" exact>
+                {isLoggedIn ? <RoundOverview /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login">
                 <Login />

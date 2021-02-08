@@ -15,7 +15,7 @@ export const ScorecardManager = () => {
 
     useEffect(() => {
         getToken().then((token) =>
-            fetch(`/api/scorecard/${currentUserId}`, {
+            fetch(`/api/scorecard/user/${currentUserId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

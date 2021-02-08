@@ -66,8 +66,8 @@ export const CourseDetails = () => {
                     },
                 })
                     .then((res) => res.json())
-                    .then((parsedCourse) => {
-                        setHoles(parsedCourse);
+                    .then((parsedHoles) => {
+                        setHoles(parsedHoles);
                     })
             );
         }

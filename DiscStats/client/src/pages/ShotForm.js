@@ -53,10 +53,12 @@ export const ShotForm = () => {
         } else {
             setIsLoading(false);
             setShot({
-                name: "",
-                weight: 0,
-                plastic: "",
-                discTypeId: 0
+                qualityOfShotId: 0,
+                discId: 0,
+                shotRangeId: 0,
+                shotTypeId: 0,
+                shotSelectionId: 0,
+                isObstructed: false
             });
         }
     }, [params.shotId]);
@@ -120,7 +122,7 @@ export const ShotForm = () => {
         );
     }, []);
 
-    const addShot = (shot) => {
+    const addShot = (shot, holeComplete) => {
         getToken().then((token) => {
             return fetch("/api/shot", {
                 method: "POST",
@@ -129,7 +131,14 @@ export const ShotForm = () => {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(shot),
-            }).then(() => history.push("/scorecards"));
+            })
+                .then(() => {
+                    if (holeComplete) {
+                        history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`)
+                    } else {
+                        history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot`)
+                    }
+                })
         });
     };
 
@@ -142,7 +151,8 @@ export const ShotForm = () => {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(shot),
-            }).then(() => history.push("/scorecards"));
+            })
+                .then(() => history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`))
         });
     };
 
@@ -159,6 +169,7 @@ export const ShotForm = () => {
         } else {
             setIsLoading(true);
             if (params.shotId) {
+                console.log(shot)
                 updateShot({
                     id: shot.id,
                     scorecardId: params.scorecardId,
@@ -170,7 +181,7 @@ export const ShotForm = () => {
                     shotTypeId: shot.shotTypeId,
                     shotSelectionId: shot.shotSelectionId,
                     isObstructed: !isChecked
-                });
+                })
             } else {
                 addShot({
                     scorecardId: params.scorecardId,
@@ -182,10 +193,30 @@ export const ShotForm = () => {
                     shotTypeId: shot.shotTypeId,
                     shotSelectionId: shot.shotSelectionId,
                     isObstructed: !isChecked
-                });
+                }, false)
             }
         }
     };
+
+    const handleCompleteHole = (e) => {
+        e.preventDefault();
+        if (parseInt(shot.shotTypeId) === 0 || parseInt(shot.shotRangeId) === 0 || parseInt(shot.shotSelectionId) === 0 || parseInt(shot.QualityOfShotId) === 0 || parseInt(shot.DiscId) === 0) {
+            toast.error("Enter a choice for all fields", { position: "top:center" });
+        } else {
+            setIsLoading(true);
+            addShot({
+                scorecardId: params.scorecardId,
+                userId: parseInt(userId),
+                holeId: params.holeId,
+                qualityOfShotId: shot.qualityOfShotId,
+                discId: shot.discId,
+                shotRangeId: shot.shotRangeId,
+                shotTypeId: shot.shotTypeId,
+                shotSelectionId: shot.shotSelectionId,
+                isObstructed: !isChecked
+            }, true)
+        }
+    }
 
     const handleDelete = () => {
         getToken().then((token) =>
@@ -214,9 +245,11 @@ export const ShotForm = () => {
 
     return (
         <div className={width < 768 ? "container my-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
-            <Link to={`/scorecards/${params.scorecardId}/${params.holeId}`} className="row d-none d-md-flex" disabled={isLoading}>
-                <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
-            </Link>
+            {params.shotId &&
+                <Link to={`/scorecards/${params.scorecardId}/${params.holeId}/overview`} className="row d-none d-md-flex" disabled={isLoading}>
+                    <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
+                </Link>
+            }
             <Form className="p-5 mt-n5" onSubmit={handleSubmit}>
                 {params.shotId ? <h2>Edit Shot</h2> : <h2>Add Shot</h2>}
                 <FormGroup row>
@@ -330,19 +363,35 @@ export const ShotForm = () => {
                     Obstructed?
                     </Label>
                 </FormGroup>
-                <Button block={width < 992} type="submit" className="mt-4 mr-3" color="danger" disabled={isLoading}>
-                    {params.shotId ? "Save" : "Submit"}
+                <Button block={width < 992}
+                    type="submit"
+                    className="mt-4 mr-3"
+                    color={params.shotId ? "danger" : "primary"}
+                    disabled={isLoading}
+                    onClick={handleSubmit}
+                >
+                    {params.shotId ? "Save" : "Next Shot"}
                 </Button>
-                {params.shotId && (
+                {!params.shotId &&
                     <Button block={width < 992}
-                        onClick={(e) => setPendingDelete(true)}
-                        className="mt-4"
-                        color="dark"
+                        type="submit"
+                        className="mt-4 mr-3"
+                        color="danger"
                         disabled={isLoading}
+                        onClick={handleCompleteHole}
                     >
-                        Delete
+                        Complete Hole
                     </Button>
-                )}
+                }
+                <Button block={width < 992}
+                    onClick={(e) => setPendingDelete(true)}
+                    className="mt-4"
+                    color="dark"
+                    disabled={isLoading}
+                >
+                    Delete
+                </Button>
+
             </Form>
             <Modal isOpen={pendingDelete}>
                 <ModalHeader>Delete Shot?</ModalHeader>

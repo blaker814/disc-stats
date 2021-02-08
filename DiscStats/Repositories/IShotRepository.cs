@@ -10,6 +10,7 @@ namespace DiscStats.Repositories
         void Update(Shot shot);
         List<Shot> GetByCourseId(int id);
         List<Shot> GetByHoleId(int id);
+        List<Shot> GetByHoleAndScorecardId(int id, int scorecardId);
         List<Shot> GetByDiscId(int id);
         Shot GetById(int id);
         List<Shot> GetByScorecardId(int id);

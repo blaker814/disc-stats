@@ -61,6 +61,13 @@ namespace DiscStats.Controllers
             return Ok(shots);
         }
 
+        [HttpGet("hole/{id}/{scorecardId}")]
+        public IActionResult GetByHoleAndScorecardId(int id, int scorecardId)
+        {
+            var shots = _shotRepo.GetByHoleAndScorecardId(id, scorecardId);
+            return Ok(shots);
+        }
+
         [HttpGet("disc/{id}")]
         public IActionResult GetByDiscId(int id)
         {
@@ -72,7 +79,7 @@ namespace DiscStats.Controllers
         public IActionResult Post(Shot shot)
         {
             _shotRepo.Add(shot);
-            return CreatedAtAction("Get", new { id = shot.Id }, shot);
+            return Ok(shot);
         }
 
         [HttpPut("{id}")]

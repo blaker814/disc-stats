@@ -32,7 +32,9 @@ namespace DiscStats.Repositories
 
         public Scorecard GetById(int id)
         {
-            return _context.Scorecard.FirstOrDefault(s => s.Id == id);
+            return _context.Scorecard
+                .Include(s => s.Course)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public void Add(Scorecard scorecard)

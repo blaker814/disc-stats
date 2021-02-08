@@ -30,7 +30,7 @@ export const Home = () => {
 
     useEffect(() => {
         getToken().then((token) =>
-            fetch(`/api/scorecard/${currentUser.id}`, {
+            fetch(`/api/scorecard/user/${currentUser.id}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
