@@ -9,6 +9,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
     const [scorecardShots, setScorecardShots] = useState([]);
     const [holes, setHoles] = useState([]);
     const [score, setScore] = useState(0);
+    const [complete, setComplete] = useState(false);
 
     useEffect(() => {
         getToken().then((token) =>
@@ -48,15 +49,28 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
     }, [holes, scorecardShots])
 
     useEffect(() => {
-        if (roundScores) {
+        if (score) {
             setRoundScores([...roundScores, score])
         }
     }, [score])
 
     const findScore = () => {
-        let totalPar = 0;
-        holes.forEach(hole => totalPar = totalPar + hole.par);
-        const totalScore = scorecardShots.length - totalPar;
+        let totalScore = 0;
+        let playedAllHoles = holes.every(hole => {
+            let shotsForHole = scorecardShots.filter(ss => ss.holeId === hole.id)
+            if (shotsForHole.length) {
+                let penaltyStrokes = 0;
+                shotsForHole.forEach(shot => {
+                    if (shot.qualityOfShotId === 4) {
+                        penaltyStrokes = penaltyStrokes + 1
+                    }
+                })
+                let holeScore = shotsForHole.length + penaltyStrokes - hole.par;
+                totalScore = totalScore + holeScore;
+            }
+            return shotsForHole.length > 0;
+        });
+        setComplete(playedAllHoles);
         setScore(totalScore);
     }
 
@@ -67,7 +81,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
                 <div className="col-12 py-3 card-body">
                     <p className="text-left ml-3"><strong>Date:</strong> {formatDate(scorecard.createDateTime)}</p>
                     <p className="text-left ml-3"><strong>Conditions:</strong> {scorecard.conditions.label}</p>
-                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`}</p>
+                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`} {!complete && "(Partial Round)"}</p>
                 </div>
             </Card >
         </Link>

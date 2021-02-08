@@ -10,6 +10,7 @@ export const Home = () => {
     const [shots, setShots] = useState([]);
     const [roundScores, setRoundScores] = useState([]);
     const [scoreBreakdown, setScoreBreakdown] = useState();
+    const [average, setAverage] = useState();
 
     const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -56,10 +57,11 @@ export const Home = () => {
                 plus: 0
             };
             groupByRound.map(holeNum => {
-                holeNum.map(round => {
-                    if (round) {
-                        let par = round[0].hole.par;
-                        switch (round.length - par) {
+                holeNum.map(shots => {
+                    if (shots) {
+                        let par = shots[0].hole.par;
+                        let penaltyStrokes = shots.filter(shot => shot.qualityOfShotId === 4).length;
+                        switch (shots.length + penaltyStrokes - par) {
                             case -4:
                                 breakdown.minus = breakdown.minus + 1;
                                 break;
@@ -92,12 +94,19 @@ export const Home = () => {
         }
     }, [shots]);
 
+    useEffect(() => {
+        if (roundScores.length) {
+            const averageScore = Math.round(roundScores.reduce((acc, cur) => acc + cur) / scorecards.length);
+            setAverage(averageScore);
+        }
+    }, [roundScores])
+
     return (
         <div className="m-5">
             <h3>Welcome {currentUser.name}</h3>
             <div className="row justify-content-center">
                 <p className="stat">Rounds played: {scorecards.length}</p>
-                <p className="stat">Avg Score: {roundScores.length && Math.round(roundScores.reduce((acc, cur) => acc + cur) / scorecards.length)}</p>
+                <p className="stat">Avg Score: {average < 0 ? average : average === 0 ? "E" : `+${average}`}</p>
             </div>
             {scoreBreakdown && (
                 <div className="ml-n5" style={{ position: "relative", width: "95vw", height: "18em" }}>
