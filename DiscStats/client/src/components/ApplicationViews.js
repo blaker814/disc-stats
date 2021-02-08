@@ -49,7 +49,7 @@ const ApplicationViews = () => {
             <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)" exact>
                 {isLoggedIn ? <HoleDetails /> : <Redirect to="/login" />}
             </Route>
-            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/shot" exact>
+            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/shot/:shotNum(\d+)" exact>
                 {isLoggedIn ? <ShotForm /> : <Redirect to="/login" />}
             </Route>
             <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/:shotId(\d+)" exact>

@@ -77,7 +77,7 @@ export const RoundOverview = () => {
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>
                 <p className="text-left"><strong>Score:</strong> {shots.length}</p>
             </div>
-            {shots.length &&
+            {shots.length > 0 &&
                 holes.map(hole => {
                     let shotsForHole = shots.filter(shot => shot.holeId === hole.id);
                     return (
@@ -87,7 +87,7 @@ export const RoundOverview = () => {
                     )
                 })
             }
-            <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards`)}>Submit Scorecard</Button><br />
+            <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards`)}>Save Round</Button><br />
             <Button color="dark" block={width < 992} onClick={() => setPendingDelete(true)}>Delete Scorecard</Button>
             <Modal isOpen={pendingDelete}>
                 <ModalHeader>Delete Scorecard?</ModalHeader>

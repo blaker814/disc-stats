@@ -136,7 +136,9 @@ export const ShotForm = () => {
                     if (holeComplete) {
                         history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`)
                     } else {
-                        history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot`)
+                        const shotNumber = shot.qualityOfShotId === "4" ? parseInt(params.shotNum) + 2 : parseInt(params.shotNum) + 1;
+                        history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot/${shotNumber}`)
+                        setIsLoading(false);
                     }
                 })
         });
@@ -251,7 +253,7 @@ export const ShotForm = () => {
                 </Link>
             }
             <Form className="p-5 mt-n5" onSubmit={handleSubmit}>
-                {params.shotId ? <h2>Edit Shot</h2> : <h2>Add Shot</h2>}
+                {params.shotId ? <h2>Edit Shot</h2> : <h2>Shot {params.shotNum}</h2>}
                 <FormGroup row>
                     <Label>
                         Range

@@ -17,7 +17,6 @@ export const CourseDetails = () => {
     const [conditionsId, setConditionsId] = useState(0);
     const [par, setPar] = useState();
     const [scores, setScores] = useState([]);
-    const [isComplete, setIsComplete] = useState(false)
     const [distance, setDistance] = useState();
     const [average, setAverage] = useState();
     const [best, setBest] = useState();
@@ -134,9 +133,8 @@ export const CourseDetails = () => {
     }, [scores])
 
     const findScore = (scorecardShots) => {
-        console.log(scorecardShots)
         let totalScore = 0;
-        let playedAllHoles = holes.every(hole => {
+        holes.forEach(hole => {
             let shotsForHole = scorecardShots.filter(ss => ss.holeId === hole.id)
             if (shotsForHole.length) {
                 let penaltyStrokes = 0;
@@ -148,9 +146,7 @@ export const CourseDetails = () => {
                 let holeScore = shotsForHole.length + penaltyStrokes - hole.par;
                 totalScore = totalScore + holeScore;
             }
-            return shotsForHole.length > 0;
         });
-        setIsComplete(playedAllHoles);
         return totalScore;
     }
 

@@ -52,7 +52,7 @@ namespace DiscStats.Repositories
                 .Include(h => h.ShotRange)
                 .Include(h => h.QualityOfShot)
                 .Where(s => s.HoleId == id && s.ScorecardId == scorecardId)
-                .OrderByDescending(s => s.Id)
+                .OrderBy(s => s.Id)
                 .ToList();
         }
 

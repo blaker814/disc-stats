@@ -46,12 +46,18 @@ export const HoleOverview = () => {
         }
     }, [hole]);
 
+    const getTotalShots = () => {
+        const thrownShots = shots.length;
+        const penaltyStrokes = shots.filter(shot => shot.qualityOfShotId === 4).length
+        return thrownShots + penaltyStrokes + 1;
+    }
+
     return (
         <div className="container mt-4 mb-5">
             <h3>Hole {hole.number} Overview</h3>
             <div>
                 <p className="text-left"><strong>Total shots:</strong> {shots.length}</p>
-                <p className="text-left"><strong>Penalty strokes:</strong> {shots.filter(shot => shot.outOfBounds).length}</p>
+                <p className="text-left"><strong>Penalty strokes:</strong> {shots.filter(shot => shot.qualityOfShotId === 4).length}</p>
             </div>
             {
                 shots.map((shot, i) => (
@@ -60,6 +66,8 @@ export const HoleOverview = () => {
                     </div>
                 ))
             }
+            <Button color="secondary" className="my-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId)}/shot/${getTotalShots()}`)}>Add Shot</Button>
+            <hr />
             <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId) + 1}`)}>Next Hole</Button><br />
             <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
         </div>

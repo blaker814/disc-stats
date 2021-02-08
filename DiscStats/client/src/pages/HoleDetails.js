@@ -92,7 +92,7 @@ export const HoleDetails = () => {
                     <hr />
                 </>
             }
-            <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot`)}>Start Hole</Button><br />
+            <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot/1`)}>Start Hole</Button><br />
             <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
         </div>
     );
