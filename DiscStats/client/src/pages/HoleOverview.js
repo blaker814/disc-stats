@@ -8,7 +8,6 @@ import useWindowDimensions from "../utils/getWindowDimensions";
 export const HoleOverview = () => {
     const [hole, setHole] = useState([]);
     const [shots, setShots] = useState([]);
-    const [isHidden, setIsHidden] = useState(true);
     const { getToken } = useContext(UserContext);
     const { width } = useWindowDimensions();
     const history = useHistory();
@@ -62,7 +61,7 @@ export const HoleOverview = () => {
             {
                 shots.map((shot, i) => (
                     <div key={shot.id} className="m-4">
-                        <ShotCard shot={shot} hidden={isHidden} shotNumber={i + 1} params={params} />
+                        <ShotCard shot={shot} shotNumber={i + 1} params={params} />
                     </div>
                 ))
             }

@@ -4,11 +4,13 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { HoleCard } from "../components/HoleCard";
 import { UserContext } from "../providers/UserProvider";
 import useWindowDimensions from "../utils/getWindowDimensions";
+import groupBy from "../utils/groupBy";
 
 export const RoundOverview = () => {
     const [scorecard, setScorecard] = useState();
     const [holes, setHoles] = useState([]);
     const [shots, setShots] = useState([]);
+    const [roundScore, setRoundScore] = useState();
     const [pendingDelete, setPendingDelete] = useState(false);
     const params = useParams();
     const history = useHistory();
@@ -58,6 +60,22 @@ export const RoundOverview = () => {
         }
     }, [scorecard]);
 
+    useEffect(() => {
+        if (shots.length) {
+            const shotsPerHole = groupBy(shots, "holeId");
+            let totalScoreForRound = 0;
+            shotsPerHole.forEach(holeShots => {
+                if (holeShots.length) {
+                    const penaltyStrokes = holeShots.filter(shot => shot.qualityOfShotId === 4).length;
+                    const strokesForHole = holeShots.length + penaltyStrokes;
+                    totalScoreForRound = totalScoreForRound + strokesForHole - holeShots[0].hole.par;
+                }
+            })
+            setRoundScore(totalScoreForRound);
+        }
+
+    }, [shots])
+
     const handleDelete = () => {
         getToken().then((token) =>
             fetch(`/api/scorecard/${params.scorecardId}`, {
@@ -75,14 +93,16 @@ export const RoundOverview = () => {
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>
-                <p className="text-left"><strong>Score:</strong> {shots.length}</p>
+                <p className="text-left"><strong>Total Score:</strong> {roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
             </div>
             {shots.length > 0 &&
                 holes.map(hole => {
                     let shotsForHole = shots.filter(shot => shot.holeId === hole.id);
+                    let penaltyStrokesForHole = shotsForHole.filter(shot => shot.qualityOfShotId === 4).length;
+                    let holeStrokes = shotsForHole.length + penaltyStrokesForHole;
                     return (
                         <div key={hole.id} className="m-4">
-                            <HoleCard hole={hole} shotTotal={shotsForHole.length} params={params} />
+                            <HoleCard hole={hole} strokes={holeStrokes} params={params} />
                         </div>
                     )
                 })
