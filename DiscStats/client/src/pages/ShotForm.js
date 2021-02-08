@@ -225,7 +225,7 @@ export const ShotForm = () => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then(() => history.push("/scorecards"))
+            }).then(() => history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`))
         );
         setPendingDelete(false);
     };

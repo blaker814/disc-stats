@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Button } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { HoleCard } from "../components/HoleCard";
 import { UserContext } from "../providers/UserProvider";
 import useWindowDimensions from "../utils/getWindowDimensions";
@@ -9,6 +9,7 @@ export const RoundOverview = () => {
     const [scorecard, setScorecard] = useState();
     const [holes, setHoles] = useState([]);
     const [shots, setShots] = useState([]);
+    const [pendingDelete, setPendingDelete] = useState(false);
     const params = useParams();
     const history = useHistory();
     const { width } = useWindowDimensions();
@@ -57,6 +58,18 @@ export const RoundOverview = () => {
         }
     }, [scorecard]);
 
+    const handleDelete = () => {
+        getToken().then((token) =>
+            fetch(`/api/scorecard/${params.scorecardId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then(() => history.push("/scorecards"))
+        );
+        setPendingDelete(false);
+    };
+
     return (
         <div className="container mt-4 mb-5">
             <h3>Round Overview</h3>
@@ -75,7 +88,20 @@ export const RoundOverview = () => {
                 })
             }
             <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards`)}>Submit Scorecard</Button><br />
-            <Button color="dark" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Delete Scorecard</Button>
+            <Button color="dark" block={width < 992} onClick={() => setPendingDelete(true)}>Delete Scorecard</Button>
+            <Modal isOpen={pendingDelete}>
+                <ModalHeader>Delete Scorecard?</ModalHeader>
+                <ModalBody>
+                    Are you sure you want to delete this scorecard? This action cannot be
+                    undone.
+                </ModalBody>
+                <ModalFooter>
+                    <Button outline onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                    <Button color="dark" onClick={handleDelete}>
+                        Yes, Delete
+                </Button>
+                </ModalFooter>
+            </Modal>
         </div>
     )
 }
