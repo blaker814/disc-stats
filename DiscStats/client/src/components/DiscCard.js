@@ -30,7 +30,7 @@ export const DiscCard = ({ disc }) => {
                     <p className="text-left ml-3"><strong>Weight:</strong> {disc.weight}g</p>
                     <p className="text-left ml-3"><strong>Plastic:</strong> {disc.plastic}</p>
                     <p className="text-left ml-3"><strong>Type:</strong> {disc.discType.label}</p>
-                    <p className="text-left ml-3"><strong>Shots recorded:</strong> {discShots.length}</p>
+                    <p className="text-left ml-3"><strong>Throws recorded:</strong> {discShots.length}</p>
                 </div>
             </Card >
         </Link>
