@@ -81,7 +81,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
                 <div className="col-12 py-3 card-body">
                     <p className="text-left ml-3"><strong>Date:</strong> {formatDate(scorecard.createDateTime)}</p>
                     <p className="text-left ml-3"><strong>Conditions:</strong> {scorecard.conditions.label}</p>
-                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`} {!isComplete && "(Partial Round)"}</p>
+                    <p className="text-left ml-3"><strong>Score:</strong> {score < 0 ? score : score === 0 ? "E" : `+${score}`} {!isComplete && "(Partial)"}</p>
                 </div>
             </Card >
         </Link>

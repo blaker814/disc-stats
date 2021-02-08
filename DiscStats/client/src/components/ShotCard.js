@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import { Card } from "reactstrap"
 
-export const ShotCard = ({ shot, shotNumber, params }) => {
+export const ShotCard = ({ shot, shotNumber, params, hole }) => {
     return (
-        <Link to={`/scorecards/${params.scorecardId}/${params.holeId}/${shot.id}`} className="card-link">
+        <Link to={`/scorecards/${params.scorecardId}/${params.holeId}/${shot.id}`} className="card-link" onClick={() => localStorage.setItem("hole", hole.number)}>
             < Card className="bg-light">
                 <h5 className="card-header"><strong>Shot {shotNumber}</strong></h5>
                 <div className="row w-100 py-3 card-body">

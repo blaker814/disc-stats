@@ -138,6 +138,14 @@ export const ShotForm = () => {
                     } else {
                         const shotNumber = shot.qualityOfShotId === "4" ? parseInt(params.shotNum) + 2 : parseInt(params.shotNum) + 1;
                         history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot/${shotNumber}`)
+                        setShot({
+                            qualityOfShotId: 0,
+                            discId: 0,
+                            shotRangeId: 0,
+                            shotTypeId: 0,
+                            shotSelectionId: 0,
+                            isObstructed: false
+                        });
                         setIsLoading(false);
                     }
                 })
@@ -253,7 +261,8 @@ export const ShotForm = () => {
                 </Link>
             }
             <Form className="p-5 mt-n5" onSubmit={handleSubmit}>
-                {params.shotId ? <h2>Edit Shot</h2> : <h2>Shot {params.shotNum}</h2>}
+                <h2>Hole {JSON.parse(localStorage.getItem("hole"))}</h2>
+                {params.shotId ? <h4>Edit Shot</h4> : <h4>Shot {params.shotNum}</h4>}
                 <FormGroup row>
                     <Label>
                         Range

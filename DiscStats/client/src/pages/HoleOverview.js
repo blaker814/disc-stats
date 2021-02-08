@@ -45,6 +45,11 @@ export const HoleOverview = () => {
         }
     }, [hole]);
 
+    const handleAdd = () => {
+        localStorage.setItem("hole", hole.number)
+        history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId)}/shot/${getTotalShots()}`)
+    }
+
     const getTotalShots = () => {
         const thrownShots = shots.length;
         const penaltyStrokes = shots.filter(shot => shot.qualityOfShotId === 4).length
@@ -53,7 +58,7 @@ export const HoleOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
-            <h3>Hole {hole.number} Overview</h3>
+            <h3 className="mt-3">Hole {hole.number} Overview</h3>
             <div>
                 <p className="text-left"><strong>Total shots:</strong> {shots.length}</p>
                 <p className="text-left"><strong>Penalty strokes:</strong> {shots.filter(shot => shot.qualityOfShotId === 4).length}</p>
@@ -61,11 +66,11 @@ export const HoleOverview = () => {
             {
                 shots.map((shot, i) => (
                     <div key={shot.id} className="m-4">
-                        <ShotCard shot={shot} shotNumber={i + 1} params={params} />
+                        <ShotCard shot={shot} shotNumber={i + 1} hole={hole} params={params} />
                     </div>
                 ))
             }
-            <Button color="secondary" className="my-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId)}/shot/${getTotalShots()}`)}>Add Shot</Button>
+            <Button color="secondary" className="my-4" block={width < 992} onClick={handleAdd}>Add Shot</Button>
             <hr />
             <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId) + 1}`)}>Next Hole</Button><br />
             <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
