@@ -118,37 +118,41 @@ export const HoleDetails = () => {
     }
 
     return (
-        <div className="container mt-4">
-            {hole &&
-                <>
-                    <h3>Hole {hole.number}</h3>
-                    <div>
-                        <p className="text-left"><strong>Par:</strong> {hole.par}</p>
-                        <p className="text-left"><strong>Distance:</strong> {hole.distance}</p>
-                    </div>
-                </>
-            }
-            {disc && shotType && lastDrive &&
-                <>
-                    <div>
-                        <p className="text-left"><strong>Most thrown disc:</strong> {disc.name}</p>
-                        <p className="text-left"><strong>Most thrown shot:</strong> {shotType.label}</p>
-                    </div>
-                    <hr />
-                    <div className="row">
-                        <p className="text-left mx-3"><strong>Last throw:</strong> {lastDrive.disc.name} {lastDrive.shotType.label} {lastDrive.shotSelection.label}</p>
-                        <p className="text-left mx-3"><strong>Result:</strong> {lastDrive.qualityOfShot.label}</p>
-                    </div>
-                    <hr />
-                </>
-            }
+        <div className="mt-4">
+            <div className="container">
+                {hole &&
+                    <>
+                        <h3>Hole {hole.number}</h3>
+                        <div>
+                            <p className="text-left"><strong>Par:</strong> {hole.par}</p>
+                            <p className="text-left"><strong>Distance:</strong> {hole.distance}</p>
+                        </div>
+                    </>
+                }
+                {disc && shotType && lastDrive &&
+                    <>
+                        <div>
+                            <p className="text-left"><strong>Most thrown disc:</strong> {disc.name}</p>
+                            <p className="text-left"><strong>Most thrown shot:</strong> {shotType.label}</p>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <p className="text-left mx-3"><strong>Last throw:</strong> {lastDrive.disc.name} {lastDrive.shotType.label} {lastDrive.shotSelection.label}</p>
+                            <p className="text-left mx-3"><strong>Result:</strong> {lastDrive.qualityOfShot.label}</p>
+                        </div>
+                        <hr />
+                    </>
+                }
+            </div>
             {scoreBreakdown && (
                 <div className="mx-0" style={{ position: "relative", width: "95vw", height: "18em" }}>
                     <ScoreBar scoreBreakdown={scoreBreakdown} />
                 </div>
             )}
-            <Button color="danger" className="mt-4" block={width < 992} onClick={handleStart}>Start Hole</Button><br />
-            <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
+            <div className="container mb-4">
+                <Button color="danger" className="mt-4" block={width < 992} onClick={handleStart}>Start Hole</Button><br />
+                <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
+            </div>
         </div>
     );
 }

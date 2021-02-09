@@ -233,36 +233,38 @@ export const CourseDetails = () => {
 
     return (
         <>
-            <div className="mt-4 mt-md-0" style={{ maxWidth: "960px" }}>
-                <div className="row">
-                    <Link to={location.pathname.includes("scorecards") ? "/scorecards/courses" : "/courses"}
-                        className="mt-4 ml-5 d-none d-md-flex"
-                    >
-                        <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
-                    </Link>
+            <div className="mt-4 mt-md-0">
+                <div className="container">
+                    <div className="row">
+                        <Link to={location.pathname.includes("scorecards") ? "/scorecards/courses" : "/courses"}
+                            className="mt-4  d-none d-md-flex"
+                        >
+                            <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
+                        </Link>
+                    </div>
+                    <h3>{course.name}</h3>
+                    <div>
+                        <p className="text-left"><strong>Location:</strong> {course.location}</p>
+                        <p className="text-left"><strong>Description:</strong> {course.description}</p>
+                    </div>
+                    <hr />
+                    <div className="row mr-1 justify-content-between">
+                        <p className="text-left ml-3"><strong>Par:</strong> {par}</p>
+                        <p className="text-left ml-3"><strong>Distance:</strong> {distance}ft</p>
+                        <p className="text-left ml-3"><strong># of holes:</strong> {holes.length}</p>
+                        <p className="text-left ml-3"><strong>Times played:</strong> {scorecards.length}</p>
+                        <p className="text-left ml-3"><strong>Avg score:</strong> {scorecards.length ? average : "N/A"}</p>
+                        <p className="text-left ml-3"><strong>Best score:</strong> {scorecards.length ? best : "N/A"}</p>
+                    </div>
+                    <hr />
                 </div>
-                <h3>{course.name}</h3>
-                <div className="ml-5">
-                    <p className="text-left"><strong>Location:</strong> {course.location}</p>
-                    <p className="text-left"><strong>Description:</strong> {course.description}</p>
-                </div>
-                <hr className="mx-5" />
-                <div className="row ml-5">
-                    <p className="text-left col-4"><strong>Par:</strong> {par}</p>
-                    <p className="text-left col-4"><strong>Distance:</strong> {distance}ft</p>
-                    <p className="text-left col-4"><strong># of holes:</strong> {holes.length}</p>
-                    <p className="text-left col-4"><strong>Times played:</strong> {scorecards.length}</p>
-                    <p className="text-left col-4"><strong>Avg score:</strong> {scorecards.length ? average : "N/A"}</p>
-                    <p className="text-left col-4"><strong>Best score:</strong> {scorecards.length ? best : "N/A"}</p>
-                </div>
-                <hr className="mx-5" />
                 {scoreBreakdown && (
-                    <div className="m-0" style={{ position: "relative", width: "95vw", height: "18em" }}>
+                    <div className="mx-0 my-3" style={{ position: "relative", width: "95vw", height: "18em" }}>
                         <ScoreBar scoreBreakdown={scoreBreakdown} />
                     </div>
                 )}
                 {location.pathname.includes("scorecards") && (
-                    <>
+                    <div className="container">
                         <Form className={width > 576 ? (width < 992 ? "my-4 mx-auto w-75" : "mt-4 mx-auto w-25") : "my-4 mx-3"}
                             onSubmit={handleSubmit}
                         >
@@ -289,7 +291,7 @@ export const CourseDetails = () => {
                             </FormGroup>
                             <Button color="danger" type="submit" block={width < 992}>Start Round</Button>
                         </Form>
-                    </>
+                    </div>
                 )}
             </div>
         </>
