@@ -13,10 +13,14 @@ namespace DiscStats.Controllers
     {
         private readonly IShotRepository _shotRepo;
         private readonly IUserRepository _userRepo;
-        public ShotController(IShotRepository shotRepo, IUserRepository userRepo)
+        private readonly IDiscRepository _discRepo;
+        private readonly IScorecardRepository _scorecardRepo;
+        public ShotController(IShotRepository shotRepo, IUserRepository userRepo, IDiscRepository discRepo, IScorecardRepository scorecardRepo)
         {
             _shotRepo = shotRepo;
             _userRepo = userRepo;
+            _discRepo = discRepo;
+            _scorecardRepo = scorecardRepo;
         }
 
         [HttpGet("{id}")]
@@ -71,16 +75,22 @@ namespace DiscStats.Controllers
         [HttpGet("scorecard/{id}")]
         public IActionResult GetByScorecardId(int id)
         {
-            var shots = _shotRepo.GetByScorecardId(id);
-            if (shots == null)
+            var scorecard = _scorecardRepo.GetById(id);
+            if (scorecard == null)
             {
                 return NotFound();
             }
 
             var currentUser = GetCurrentUserProfile();
-            if (currentUser.Id != shots[0].UserId)
+            if (currentUser.Id != scorecard.UserId)
             {
                 return Unauthorized();
+            }
+
+            var shots = _shotRepo.GetByScorecardId(id);
+            if (shots == null)
+            {
+                return NotFound();
             }
 
             return Ok(shots);
@@ -102,16 +112,22 @@ namespace DiscStats.Controllers
         [HttpGet("hole/{id}/{scorecardId}")]
         public IActionResult GetByHoleAndScorecardId(int id, int scorecardId)
         {
-            var shots = _shotRepo.GetByHoleAndScorecardId(id, scorecardId);
-            if (shots == null)
+            var scorecard = _scorecardRepo.GetById(id);
+            if (scorecard == null)
             {
                 return NotFound();
             }
 
             var currentUser = GetCurrentUserProfile();
-            if (currentUser.Id != shots[0].UserId)
+            if (currentUser.Id != scorecard.UserId)
             {
                 return Unauthorized();
+            }
+
+            var shots = _shotRepo.GetByHoleAndScorecardId(id, scorecardId);
+            if (shots == null)
+            {
+                return NotFound();
             }
 
             return Ok(shots);
@@ -120,16 +136,21 @@ namespace DiscStats.Controllers
         [HttpGet("disc/{id}")]
         public IActionResult GetByDiscId(int id)
         {
+            var disc = _discRepo.GetById(id);
+            if (disc == null)
+            {
+                return NotFound();
+            }
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != disc.UserId)
+            {
+                return Unauthorized();
+            }
+
             var shots = _shotRepo.GetByDiscId(id);
             if (shots == null)
             {
                 return NotFound();
-            }
-
-            var currentUser = GetCurrentUserProfile();
-            if (currentUser.Id != shots[0].UserId)
-            {
-                return Unauthorized();
             }
 
             return Ok(shots);
