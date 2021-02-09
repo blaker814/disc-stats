@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DiscStats.Controllers
@@ -16,9 +17,11 @@ namespace DiscStats.Controllers
     public class ShotController : ControllerBase
     {
         private readonly IShotRepository _shotRepo;
-        public ShotController(IShotRepository shotRepo)
+        private readonly IUserRepository _userRepo;
+        public ShotController(IShotRepository shotRepo, IUserRepository userRepo)
         {
             _shotRepo = shotRepo;
+            _userRepo = userRepo;
         }
 
         [HttpGet("{id}")]
@@ -30,12 +33,24 @@ namespace DiscStats.Controllers
                 return NotFound();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shot.UserId)
+            {
+                return Unauthorized();
+            }
+
             return Ok(shot);
         }
 
         [HttpGet("user/{id}")]
         public IActionResult GetByUserId(int id)
         {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != id)
+            {
+                return Unauthorized();
+            }
+
             var shots = _shotRepo.GetByUserId(id);
             if (shots == null)
             {
@@ -48,7 +63,8 @@ namespace DiscStats.Controllers
         [HttpGet("course/{id}")]
         public IActionResult GetByCourseId(int id)
         {
-            var shots = _shotRepo.GetByCourseId(id);
+            var currentUser = GetCurrentUserProfile();
+            var shots = _shotRepo.GetByCourseId(id, currentUser.Id);
             if (shots == null)
             {
                 return NotFound();
@@ -66,13 +82,20 @@ namespace DiscStats.Controllers
                 return NotFound();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shots[0].UserId)
+            {
+                return Unauthorized();
+            }
+
             return Ok(shots);
         }
 
         [HttpGet("hole/{id}")]
         public IActionResult GetByHoleId(int id)
         {
-            var shots = _shotRepo.GetByHoleId(id);
+            var currentUser = GetCurrentUserProfile();
+            var shots = _shotRepo.GetByHoleId(id, currentUser.Id);
             if (shots == null)
             {
                 return NotFound();
@@ -90,6 +113,12 @@ namespace DiscStats.Controllers
                 return NotFound();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shots[0].UserId)
+            {
+                return Unauthorized();
+            }
+
             return Ok(shots);
         }
 
@@ -102,12 +131,24 @@ namespace DiscStats.Controllers
                 return NotFound();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shots[0].UserId)
+            {
+                return Unauthorized();
+            }
+
             return Ok(shots);
         }
 
         [HttpPost]
         public IActionResult Post(Shot shot)
         {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shot.UserId)
+            {
+                return Unauthorized();
+            }
+
             _shotRepo.Add(shot);
             return Ok(shot);
         }
@@ -120,6 +161,12 @@ namespace DiscStats.Controllers
                 return BadRequest();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shot.UserId)
+            {
+                return Unauthorized();
+            }
+
             _shotRepo.Update(shot);
             return NoContent();
         }
@@ -127,8 +174,26 @@ namespace DiscStats.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _shotRepo.Delete(id);
+            var shot = _shotRepo.GetById(id);
+            if (shot == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != shot.UserId)
+            {
+                return Unauthorized();
+            }
+
+            _shotRepo.Delete(shot);
             return NoContent();
+        }
+
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

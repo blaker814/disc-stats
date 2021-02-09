@@ -9,12 +9,12 @@ const chartConfig = (names, breakdown, params) => {
         "rgba(51, 153, 243, 0.6)", "rgba(60, 181, 33, 0.6)",
         "rgba(68, 110, 155, 0.6)", "rgba(205, 2, 0, 0.6)",
         "rgba(212, 117, 0, 0.6)", "rgba(153, 153, 153, 0.6)"
-    ]
+    ];
     const borderColor = [
         "rgba(51, 153, 243, 1)", "rgba(60, 181, 33, 1)",
         "rgba(68, 110, 155, 1)", "rgba(205, 2, 0, 1)",
-        "rgba(212, 117, 0, 1)", "rgba(153, 153, 153, 1)",
-    ]
+        "rgba(212, 117, 0, 1)", "rgba(153, 153, 153, 1)"
+    ];
 
     return ({
         type: "horizontalBar",
@@ -32,7 +32,7 @@ const chartConfig = (names, breakdown, params) => {
         options: {
             title: {
                 display: true,
-                text: params.courseId ? "Course Scoring Breakdown" : "All Time Score Breakdown",
+                text: params.courseId ? "Course Scoring Breakdown" : params.holeId ? "Hole Scoring Breakdown" : "All Time Score Breakdown",
                 fontSize: 16
             },
             maintainAspectRatio: false,

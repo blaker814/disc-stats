@@ -82,7 +82,7 @@ export const HoleOverview = () => {
             </div>
             <Button color="secondary" className="my-4" block={width < 768} onClick={handleAdd}>Add Shot</Button>
             <hr />
-            {hole.number != 18 && <><Button color="danger" className="mt-3" block={width < 768} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId) + 1}`)}>Next Hole</Button><br /></>}
+            {hole.number !== 18 && <><Button color="danger" className="mt-3" block={width < 768} onClick={() => history.push(`/scorecards/${params.scorecardId}/${parseInt(params.holeId) + 1}`)}>Next Hole</Button><br /></>}
             <Button color="primary" block={width < 768} className="mt-3" onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
         </div>
     )

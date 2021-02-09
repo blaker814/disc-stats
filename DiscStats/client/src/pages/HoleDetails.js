@@ -66,7 +66,7 @@ export const HoleDetails = () => {
                 double: 0,
                 plus: 0
             };
-            groupByRound.map(roundShots => {
+            groupByRound.forEach(roundShots => {
                 if (roundShots) {
                     let par = roundShots[0].hole.par;
                     let penaltyStrokes = roundShots.filter(shot => shot.qualityOfShotId === 4).length;

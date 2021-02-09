@@ -13,8 +13,6 @@ export const CourseManager = () => {
     const { getToken } = useContext(UserContext);
     const location = useLocation();
 
-    const currentUserId = JSON.parse(localStorage.getItem("user")).id;
-
     useEffect(() => {
         getToken().then((token) =>
             fetch(`/api/course`, {
@@ -46,7 +44,7 @@ export const CourseManager = () => {
                     {
                         courses.map(course => (
                             <div key={course.id} className="m-4">
-                                <CourseCard course={course} userId={currentUserId} />
+                                <CourseCard course={course} />
                             </div>
                         ))
                     }

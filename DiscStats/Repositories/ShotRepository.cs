@@ -30,7 +30,7 @@ namespace DiscStats.Repositories
             return _context.Shot.FirstOrDefault(s => s.Id == id);
         }
 
-        public List<Shot> GetByHoleId(int id)
+        public List<Shot> GetByHoleId(int id, int userId)
         {
             return _context.Shot
                 .Include(s => s.Hole)
@@ -39,7 +39,7 @@ namespace DiscStats.Repositories
                 .Include(h => h.ShotType)
                 .Include(h => h.ShotRange)
                 .Include(h => h.QualityOfShot)
-                .Where(s => s.HoleId == id)
+                .Where(s => s.HoleId == id && s.UserId == userId)
                 .OrderByDescending(s => s.Id)
                 .ToList();
         }
@@ -65,11 +65,11 @@ namespace DiscStats.Repositories
                 .ToList();
         }
 
-        public List<Shot> GetByCourseId(int id)
+        public List<Shot> GetByCourseId(int id, int userId)
         {
             return _context.Shot
                 .Include(s => s.Hole)
-                .Where(s => s.Hole.CourseId == id)
+                .Where(s => s.Hole.CourseId == id && s.UserId == userId)
                 .ToList();
         }
 
@@ -96,9 +96,8 @@ namespace DiscStats.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Shot shot)
         {
-            var shot = GetById(id);
             _context.Shot.Remove(shot);
             _context.SaveChanges();
         }

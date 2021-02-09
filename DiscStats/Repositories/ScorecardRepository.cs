@@ -43,12 +43,11 @@ namespace DiscStats.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Scorecard scorecard)
         {
-            var relatedShots = _context.Shot.Where(s => s.ScorecardId == id);
+            var relatedShots = _context.Shot.Where(s => s.ScorecardId == scorecard.Id);
             _context.RemoveRange(relatedShots);
 
-            var scorecard = GetById(id);
             _context.Scorecard.Remove(scorecard);
             _context.SaveChanges();
         }

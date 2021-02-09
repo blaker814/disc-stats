@@ -49,14 +49,8 @@ namespace DiscStats.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Disc disc)
         {
-            var disc = GetById(id);
-            if (disc == null)
-            {
-                return;
-            }
-
             disc.IsActive = false;
             _context.Entry(disc).State = EntityState.Modified;
             _context.SaveChanges();

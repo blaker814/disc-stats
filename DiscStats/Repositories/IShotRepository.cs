@@ -6,10 +6,10 @@ namespace DiscStats.Repositories
     public interface IShotRepository
     {
         void Add(Shot shot);
-        void Delete(int id);
+        void Delete(Shot shot);
         void Update(Shot shot);
-        List<Shot> GetByCourseId(int id);
-        List<Shot> GetByHoleId(int id);
+        List<Shot> GetByCourseId(int id, int userId);
+        List<Shot> GetByHoleId(int id, int userId);
         List<Shot> GetByHoleAndScorecardId(int id, int scorecardId);
         List<Shot> GetByDiscId(int id);
         Shot GetById(int id);

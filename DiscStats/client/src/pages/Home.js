@@ -56,8 +56,8 @@ export const Home = () => {
                 double: 0,
                 plus: 0
             };
-            groupByRound.map(holeNum => {
-                holeNum.map(roundShots => {
+            groupByRound.forEach(holeNum => {
+                holeNum.forEach(roundShots => {
                     if (roundShots) {
                         let par = roundShots[0].hole.par;
                         let penaltyStrokes = roundShots.filter(shot => shot.qualityOfShotId === 4).length;

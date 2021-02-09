@@ -18,25 +18,45 @@ namespace DiscStats.Controllers
     public class DiscController : ControllerBase
     {
         private readonly IDiscRepository _discRepo;
-        public DiscController(IDiscRepository discRepo)
+        private readonly IUserRepository _userRepo;
+        public DiscController(IDiscRepository discRepo, IUserRepository userRepo)
         {
             _discRepo = discRepo;
+            _userRepo = userRepo;
         }
 
         [HttpGet("{id}")]
         public IActionResult GetByUserId(int id)
         {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != id)
+            {
+                return Unauthorized();
+            }
+
             var discs = _discRepo.GetByUserId(id);
+            if (discs == null)
+            {
+                return NotFound();
+            }
+
             return Ok(discs);
         }
 
         [HttpGet("edit/{id}")]
         public IActionResult GetById(int id)
         {
+
             var disc = _discRepo.GetById(id);
             if (disc == null)
             {
                 return NotFound();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != disc.UserId)
+            {
+                return Unauthorized();
             }
 
             return Ok(disc);
@@ -45,9 +65,15 @@ namespace DiscStats.Controllers
         [HttpPost]
         public IActionResult Post(Disc disc)
         {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != disc.UserId)
+            {
+                return Unauthorized();
+            }
+
             disc.IsActive = true;
             _discRepo.Add(disc);
-            return CreatedAtAction("Get", new { id = disc.Id }, disc);
+            return Ok(disc);
         }
 
         [HttpPut("{id}")]
@@ -58,6 +84,12 @@ namespace DiscStats.Controllers
                 return BadRequest();
             }
 
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != disc.UserId)
+            {
+                return Unauthorized();
+            }
+
             _discRepo.Update(disc);
             return NoContent();
         }
@@ -65,8 +97,26 @@ namespace DiscStats.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _discRepo.Delete(id);
+            var disc = _discRepo.GetById(id);
+            if (disc == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != disc.UserId)
+            {
+                return Unauthorized();
+            }
+
+            _discRepo.Delete(disc);
             return NoContent();
+        }
+
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

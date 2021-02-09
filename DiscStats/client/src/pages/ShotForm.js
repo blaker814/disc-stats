@@ -394,7 +394,7 @@ export const ShotForm = () => {
                     </Button><br />
                     </>
                 }
-                {params.shotNum != 1 &&
+                {params.shotNum !== 1 &&
                     <Button block
                         onClick={(e) => setPendingDelete(true)}
                         className="mt-3"

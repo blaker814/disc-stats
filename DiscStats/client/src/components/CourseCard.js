@@ -3,14 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Card } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 
-export const CourseCard = ({ course, userId }) => {
+export const CourseCard = ({ course }) => {
     const { getToken } = useContext(UserContext);
     const [timesPlayed, setTimesPlayed] = useState([]);
     const location = useLocation();
 
     useEffect(() => {
         getToken().then((token) =>
-            fetch(`/api/scorecard/course/${course.id}/${userId}`, {
+            fetch(`/api/scorecard/course/${course.id}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
