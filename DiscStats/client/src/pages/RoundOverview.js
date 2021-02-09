@@ -1,7 +1,5 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useContext } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { HoleCard } from "../components/HoleCard";
 import { UserContext } from "../providers/UserProvider";
@@ -18,7 +16,6 @@ export const RoundOverview = () => {
     const history = useHistory();
     const { width } = useWindowDimensions();
     const { getToken } = useContext(UserContext);
-    const location = useLocation();
 
     useEffect(() => {
         getToken().then((token) =>
@@ -93,11 +90,6 @@ export const RoundOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
-            {/* {location.pathname.includes("/edit") &&
-                <Link to={`/scorecards`} className="row d-none d-md-flex">
-                    <FontAwesomeIcon size="lg" className="mr-auto mt-1 ml-2 text-secondary cancel" icon={faArrowLeft} />
-                </Link>
-            } */}
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>

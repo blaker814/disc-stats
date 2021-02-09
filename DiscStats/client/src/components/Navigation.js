@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
     Navbar,
@@ -7,7 +7,6 @@ import {
     Nav,
     NavLink,
     NavItem,
-    NavbarText,
 } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +34,6 @@ export const Navigation = () => {
     const { getCurrentUser, logout } = useContext(UserContext);
     const user = getCurrentUser();
     const history = useHistory();
-    const params = useParams();
     const location = useLocation();
 
     const logoutAndReturn = () => {
@@ -80,34 +78,6 @@ export const Navigation = () => {
                         </NavItem>
                     </Nav>
                 )}
-                {/* {(user && location.pathname.includes("/overview/edit")) && (
-                    <Nav className="mr-auto d-flex d-md-none" navbar>
-                        <NavItem>
-                            <NavLink onClick={() => {
-                                params.holeId ?
-                                    history.push(`/scorecards/${params.scorecardId}/overview`)
-                                    :
-                                    history.push(`/scorecards`)
-                            }}>
-                                Back
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                )}
-                {user && params.shotId && (
-                    <Nav className="mr-auto d-flex d-md-none" navbar>
-                        <NavItem>
-                            <NavLink onClick={() => {
-                                params.shotId ?
-                                    history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`)
-                                    :
-                                    history.push(`/scorecards/${params.scorecardId}/${params.holeId}`)
-                            }}>
-                                Cancel
-                            </NavLink>
-                        </NavItem>
-                    </Nav>
-                )} */}
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"

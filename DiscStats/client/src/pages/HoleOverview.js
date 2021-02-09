@@ -1,7 +1,5 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Button } from "reactstrap";
 import { ShotCard } from "../components/ShotCard";
 import { UserContext } from "../providers/UserProvider";
@@ -14,7 +12,6 @@ export const HoleOverview = () => {
     const { width } = useWindowDimensions();
     const history = useHistory();
     const params = useParams();
-    const location = useLocation();
 
     useEffect(() => {
         getToken().then((token) =>
@@ -61,11 +58,6 @@ export const HoleOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
-            {/* {location.pathname.includes("/overview/edit") &&
-                <Link to={`/scorecards/${params.scorecardId}/overview`} className="row d-none d-md-flex">
-                    <FontAwesomeIcon size="lg" className="mr-auto mt-1 ml-2 text-secondary cancel" icon={faArrowLeft} />
-                </Link>
-            } */}
             <h3 className="mt-3">Hole {hole.number} Overview</h3>
             <div>
                 <p className="text-left"><strong>Total shots:</strong> {shots.length}</p>

@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
 import { CourseCard } from "../components/CourseCard";
-import { Button } from "reactstrap";
-import useWindowDimensions from "../utils/getWindowDimensions";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseSearch from "../components/CourseSearch";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
