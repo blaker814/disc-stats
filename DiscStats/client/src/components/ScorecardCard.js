@@ -75,7 +75,7 @@ export const ScorecardCard = ({ scorecard, roundScores, setRoundScores }) => {
     }
 
     return (
-        <Link to={`/scorecards/${scorecard.id}/overview`} className="card-link">
+        <Link to={`/scorecards/${scorecard.id}/overview/edit`} className="card-link">
             <Card className="scorecard-card bg-light mobile-card">
                 <h5 className="card-header"><strong>{scorecard.course.name}</strong></h5>
                 <div className="col-12 py-3 card-body">

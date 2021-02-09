@@ -255,13 +255,11 @@ export const ShotForm = () => {
 
     return (
         <div className={width < 768 ? "container my-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
-            {params.shotId &&
-                <Link to={`/scorecards/${params.scorecardId}/${params.holeId}/overview`} className="row d-none d-md-flex" disabled={isLoading}>
-                    <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
-                </Link>
-            }
+            <Link to={params.shotId ? `/scorecards/${params.scorecardId}/${params.holeId}/overview` : `/scorecards/${params.scorecardId}/${params.holeId}`} className="row d-none d-md-flex" disabled={isLoading}>
+                <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
+            </Link>
             <Form className="p-5 mt-n5" onSubmit={handleSubmit}>
-                <h2>Hole {JSON.parse(localStorage.getItem("hole"))}</h2>
+                <h2 className={!params.shotId && "mt-3"}>Hole {JSON.parse(localStorage.getItem("hole"))}</h2>
                 {params.shotId ? <h4>Edit Shot</h4> : <h4>Shot {params.shotNum}</h4>}
                 <FormGroup row>
                     <Label>
@@ -374,35 +372,38 @@ export const ShotForm = () => {
                     Obstructed?
                     </Label>
                 </FormGroup>
-                <Button block={width < 992}
+                <Button block
                     type="submit"
-                    className="mt-4 mr-3"
+                    className="mt-3"
                     color={params.shotId ? "danger" : "primary"}
                     disabled={isLoading}
                     onClick={handleSubmit}
                 >
                     {params.shotId ? "Save" : "Next Shot"}
-                </Button>
+                </Button><br />
                 {!params.shotId &&
-                    <Button block={width < 992}
-                        type="submit"
-                        className="mt-4 mr-3"
-                        color="danger"
+                    <>
+                        <Button block
+                            type="submit"
+                            className="mt-3"
+                            color="danger"
+                            disabled={isLoading}
+                            onClick={handleCompleteHole}
+                        >
+                            Complete Hole
+                    </Button><br />
+                    </>
+                }
+                {params.shotNum != 1 &&
+                    <Button block
+                        onClick={(e) => setPendingDelete(true)}
+                        className="mt-3"
+                        color="dark"
                         disabled={isLoading}
-                        onClick={handleCompleteHole}
                     >
-                        Complete Hole
+                        Delete
                     </Button>
                 }
-                <Button block={width < 992}
-                    onClick={(e) => setPendingDelete(true)}
-                    className="mt-4"
-                    color="dark"
-                    disabled={isLoading}
-                >
-                    Delete
-                </Button>
-
             </Form>
             <Modal isOpen={pendingDelete}>
                 <ModalHeader>Delete Shot?</ModalHeader>

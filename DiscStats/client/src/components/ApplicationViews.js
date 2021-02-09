@@ -58,7 +58,13 @@ const ApplicationViews = () => {
             <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/overview" exact>
                 {isLoggedIn ? <HoleOverview /> : <Redirect to="/login" />}
             </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/:holeId(\d+)/overview/edit" exact>
+                {isLoggedIn ? <HoleOverview /> : <Redirect to="/login" />}
+            </Route>
             <Route path="/scorecards/:scorecardId(\d+)/overview" exact>
+                {isLoggedIn ? <RoundOverview /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/scorecards/:scorecardId(\d+)/overview/edit" exact>
                 {isLoggedIn ? <RoundOverview /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login">

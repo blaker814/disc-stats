@@ -1,5 +1,7 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { HoleCard } from "../components/HoleCard";
 import { UserContext } from "../providers/UserProvider";
@@ -16,6 +18,7 @@ export const RoundOverview = () => {
     const history = useHistory();
     const { width } = useWindowDimensions();
     const { getToken } = useContext(UserContext);
+    const location = useLocation();
 
     useEffect(() => {
         getToken().then((token) =>
@@ -90,25 +93,32 @@ export const RoundOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
+            {location.pathname.includes("/edit") &&
+                <Link to={`/scorecards`} className="row d-none d-md-flex">
+                    <FontAwesomeIcon size="lg" className="mr-auto mt-1 ml-2 text-secondary cancel" icon={faArrowLeft} />
+                </Link>
+            }
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>
                 <p className="text-left"><strong>Total Score:</strong> {roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
             </div>
-            {shots.length > 0 &&
-                holes.map(hole => {
-                    let shotsForHole = shots.filter(shot => shot.holeId === hole.id);
-                    let penaltyStrokesForHole = shotsForHole.filter(shot => shot.qualityOfShotId === 4).length;
-                    let holeStrokes = shotsForHole.length + penaltyStrokesForHole;
-                    return (
-                        <div key={hole.id} className="m-4">
-                            <HoleCard hole={hole} strokes={holeStrokes} params={params} />
-                        </div>
-                    )
-                })
-            }
-            <Button color="danger" className="mt-4" block={width < 992} onClick={() => history.push(`/scorecards`)}>Save Round</Button><br />
-            <Button color="dark" block={width < 992} onClick={() => setPendingDelete(true)}>Delete Scorecard</Button>
+            <div className="row justify-content-center">
+                {shots.length > 0 &&
+                    holes.map(hole => {
+                        let shotsForHole = shots.filter(shot => shot.holeId === hole.id);
+                        let penaltyStrokesForHole = shotsForHole.filter(shot => shot.qualityOfShotId === 4).length;
+                        let holeStrokes = shotsForHole.length + penaltyStrokesForHole;
+                        return (
+                            <div key={hole.id} className="m-4">
+                                <HoleCard hole={hole} strokes={holeStrokes} params={params} />
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <Button color="danger" className="mt-3" block={width < 992} onClick={() => history.push(`/scorecards`)}>Save Round</Button><br />
+            <Button color="dark" className="mt-3" block={width < 992} onClick={() => setPendingDelete(true)}>Delete Scorecard</Button>
             <Modal isOpen={pendingDelete}>
                 <ModalHeader>Delete Scorecard?</ModalHeader>
                 <ModalBody>

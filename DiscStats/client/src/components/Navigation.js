@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
     Navbar,
@@ -35,6 +35,8 @@ export const Navigation = () => {
     const { getCurrentUser, logout } = useContext(UserContext);
     const user = getCurrentUser();
     const history = useHistory();
+    const params = useParams();
+    const location = useLocation();
 
     const logoutAndReturn = () => {
         return logout().then(() => {
@@ -43,7 +45,6 @@ export const Navigation = () => {
         });
     };
 
-    const location = useLocation();
 
     return (
         < div >
@@ -76,6 +77,34 @@ export const Navigation = () => {
                                     : history.push("/courses")
                             }}>
                                 Back
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
+                {(user && location.pathname.includes("/overview/edit")) && (
+                    <Nav className="mr-auto d-flex d-md-none" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => {
+                                params.holeId ?
+                                    history.push(`/scorecards/${params.scorecardId}/overview`)
+                                    :
+                                    history.push(`/scorecards`)
+                            }}>
+                                Back
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
+                {user && params.shotId && (
+                    <Nav className="mr-auto d-flex d-md-none" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => {
+                                params.shotId ?
+                                    history.push(`/scorecards/${params.scorecardId}/${params.holeId}/overview`)
+                                    :
+                                    history.push(`/scorecards/${params.scorecardId}/${params.holeId}`)
+                            }}>
+                                Cancel
                             </NavLink>
                         </NavItem>
                     </Nav>

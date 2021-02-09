@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div className="App">
-      <ToastContainer position="bottom-right" hideProgressBar />
+      <ToastContainer closeOnClick autoClose={3000} position="bottom-right" hideProgressBar />
       <UserProvider>
         <Router>
           <Navigation />

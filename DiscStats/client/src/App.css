@@ -43,6 +43,14 @@
   }
 }
 
+.hole-card {
+  height: 12em;
+}
+
+.shot-card {
+  min-width: 15em;
+}
+
 .bottom-tab-label {
   font-size: 12px;
 }

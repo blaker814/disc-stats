@@ -24,7 +24,7 @@ export const DiscCard = ({ disc }) => {
 
     return (
         <Link to={`/discs/edit/${disc.id}`} className="card-link">
-            <Card className="disc-card bg-light mobile-card">
+            <Card className="bg-light mobile-card">
                 <h5 className="card-header"><strong>{disc.name}</strong></h5>
                 <div className="col-12 py-3 card-body">
                     <p className="text-left ml-3"><strong>Weight:</strong> {disc.weight}g</p>
