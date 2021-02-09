@@ -33,6 +33,7 @@ namespace DiscStats.Repositories
         public List<Shot> GetByHoleId(int id)
         {
             return _context.Shot
+                .Include(s => s.Hole)
                 .Include(h => h.Disc)
                 .Include(h => h.ShotSelection)
                 .Include(h => h.ShotType)

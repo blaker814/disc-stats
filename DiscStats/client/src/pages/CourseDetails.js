@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import groupBy from "../utils/groupBy";
+import { ScoreBar } from "../components/ScoreBar";
 
 export const CourseDetails = () => {
     const [course, setCourse] = useState({});
@@ -20,6 +21,7 @@ export const CourseDetails = () => {
     const [distance, setDistance] = useState();
     const [average, setAverage] = useState();
     const [best, setBest] = useState();
+    const [scoreBreakdown, setScoreBreakdown] = useState();
     const { getToken } = useContext(UserContext);
     const { width } = useWindowDimensions();
     const location = useLocation();
@@ -130,7 +132,58 @@ export const CourseDetails = () => {
             setAverage(totalAverage < 0 ? totalAverage : totalAverage === 0 ? "E" : `+${totalAverage}`)
             setBest(bestScore < 0 ? bestScore : bestScore === 0 ? "E" : `+${bestScore}`);
         }
-    }, [scores])
+    }, [scores]);
+
+    useEffect(() => {
+        if (shots.length && best) {
+            const groupByHoles = groupBy(shots, "holeId");
+            const groupByRound = groupByHoles.map(hole => groupBy(hole, "scorecardId"));
+            const breakdown = {
+                minus: 0,
+                birdie: 0,
+                par: 0,
+                bogey: 0,
+                double: 0,
+                plus: 0
+            };
+            groupByRound.map(holeNum => {
+                holeNum.map(roundShots => {
+                    if (roundShots) {
+                        let par = roundShots[0].hole.par;
+                        let penaltyStrokes = roundShots.filter(shot => shot.qualityOfShotId === 4).length;
+                        switch (roundShots.length + penaltyStrokes - par) {
+                            case -4:
+                                breakdown.minus = breakdown.minus + 1;
+                                break;
+                            case -3:
+                                breakdown.minus = breakdown.minus + 1;
+                                break;
+                            case -2:
+                                breakdown.minus = breakdown.minus + 1;
+                                break;
+                            case -1:
+                                breakdown.birdie = breakdown.birdie + 1;
+                                break;
+                            case 0:
+                                breakdown.par = breakdown.par + 1;
+                                break;
+                            case 1:
+                                breakdown.bogey = breakdown.bogey + 1;
+                                break;
+                            case 2:
+                                breakdown.double = breakdown.double + 1;
+                                break;
+                            default:
+                                breakdown.plus = breakdown.plus + 1;
+                                break;
+                        }
+                    }
+                })
+            })
+            setScoreBreakdown(breakdown);
+        }
+
+    }, [shots, best])
 
     const findScore = (scorecardShots) => {
         let totalScore = 0;
@@ -180,21 +233,21 @@ export const CourseDetails = () => {
 
     return (
         <>
-            <div className="row">
-                <Link to={location.pathname.includes("scorecards") ? "/scorecards/courses" : "/courses"}
-                    className="mt-4 ml-5 d-none d-md-flex"
-                >
-                    <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
-                </Link>
-            </div>
-            <div className="container mt-4 mt-md-0">
+            <div className="mt-4 mt-md-0" style={{ maxWidth: "960px" }}>
+                <div className="row">
+                    <Link to={location.pathname.includes("scorecards") ? "/scorecards/courses" : "/courses"}
+                        className="mt-4 ml-5 d-none d-md-flex"
+                    >
+                        <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
+                    </Link>
+                </div>
                 <h3>{course.name}</h3>
-                <div>
+                <div className="ml-5">
                     <p className="text-left"><strong>Location:</strong> {course.location}</p>
                     <p className="text-left"><strong>Description:</strong> {course.description}</p>
                 </div>
-                <hr />
-                <div className="row">
+                <hr className="mx-5" />
+                <div className="row ml-5">
                     <p className="text-left col-4"><strong>Par:</strong> {par}</p>
                     <p className="text-left col-4"><strong>Distance:</strong> {distance}ft</p>
                     <p className="text-left col-4"><strong># of holes:</strong> {holes.length}</p>
@@ -202,7 +255,12 @@ export const CourseDetails = () => {
                     <p className="text-left col-4"><strong>Avg score:</strong> {scorecards.length ? average : "N/A"}</p>
                     <p className="text-left col-4"><strong>Best score:</strong> {scorecards.length ? best : "N/A"}</p>
                 </div>
-                <hr />
+                <hr className="mx-5" />
+                {scoreBreakdown && (
+                    <div className="m-0" style={{ position: "relative", width: "95vw", height: "18em" }}>
+                        <ScoreBar scoreBreakdown={scoreBreakdown} />
+                    </div>
+                )}
                 {location.pathname.includes("scorecards") && (
                     <>
                         <Form className={width > 576 ? (width < 992 ? "my-4 mx-auto w-75" : "mt-4 mx-auto w-25") : "my-4 mx-3"}

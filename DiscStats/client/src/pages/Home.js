@@ -57,11 +57,11 @@ export const Home = () => {
                 plus: 0
             };
             groupByRound.map(holeNum => {
-                holeNum.map(shots => {
-                    if (shots) {
-                        let par = shots[0].hole.par;
-                        let penaltyStrokes = shots.filter(shot => shot.qualityOfShotId === 4).length;
-                        switch (shots.length + penaltyStrokes - par) {
+                holeNum.map(roundShots => {
+                    if (roundShots) {
+                        let par = roundShots[0].hole.par;
+                        let penaltyStrokes = roundShots.filter(shot => shot.qualityOfShotId === 4).length;
+                        switch (roundShots.length + penaltyStrokes - par) {
                             case -4:
                                 breakdown.minus = breakdown.minus + 1;
                                 break;

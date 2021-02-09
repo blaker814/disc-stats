@@ -46,10 +46,10 @@ export const DiscManager = () => {
 
     return (
         <>
-            <div className="row">
-                <DiscFilter searchTerms={searchTerms} setSearchTerms={setSearchTerms} />
-            </div>
             <div className="container">
+                <div className="row">
+                    <DiscFilter searchTerms={searchTerms} setSearchTerms={setSearchTerms} />
+                </div>
                 <h2>Discs</h2>
                 <Button type="button"
                     block={width < 992}

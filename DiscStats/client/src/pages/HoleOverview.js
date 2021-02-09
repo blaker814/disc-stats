@@ -61,11 +61,11 @@ export const HoleOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
-            {location.pathname.includes("/overview/edit") &&
+            {/* {location.pathname.includes("/overview/edit") &&
                 <Link to={`/scorecards/${params.scorecardId}/overview`} className="row d-none d-md-flex">
                     <FontAwesomeIcon size="lg" className="mr-auto mt-1 ml-2 text-secondary cancel" icon={faArrowLeft} />
                 </Link>
-            }
+            } */}
             <h3 className="mt-3">Hole {hole.number} Overview</h3>
             <div>
                 <p className="text-left"><strong>Total shots:</strong> {shots.length}</p>

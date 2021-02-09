@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 import useWindowDimensions from "../utils/getWindowDimensions";
+import groupBy from "../utils/groupBy";
+import { ScoreBar } from "../components/ScoreBar";
 
 export const HoleDetails = () => {
     const [hole, setHole] = useState();
@@ -10,6 +12,7 @@ export const HoleDetails = () => {
     const [disc, setDisc] = useState();
     const [lastDrive, setLastDrive] = useState();
     const [shotType, setShotType] = useState();
+    const [scoreBreakdown, setScoreBreakdown] = useState();
     const { getToken } = useContext(UserContext);
     const { width } = useWindowDimensions();
     const history = useHistory();
@@ -54,6 +57,48 @@ export const HoleDetails = () => {
             const shotTypes = drives.map(drive => drive.shotType)
             const mostUsedDisc = highestOccurence(discs);
             const mostUsedShotType = highestOccurence(shotTypes);
+            const groupByRound = groupBy(shots, "scorecardId");
+            const breakdown = {
+                minus: 0,
+                birdie: 0,
+                par: 0,
+                bogey: 0,
+                double: 0,
+                plus: 0
+            };
+            groupByRound.map(roundShots => {
+                if (roundShots) {
+                    let par = roundShots[0].hole.par;
+                    let penaltyStrokes = roundShots.filter(shot => shot.qualityOfShotId === 4).length;
+                    switch (roundShots.length + penaltyStrokes - par) {
+                        case -4:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -3:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -2:
+                            breakdown.minus = breakdown.minus + 1;
+                            break;
+                        case -1:
+                            breakdown.birdie = breakdown.birdie + 1;
+                            break;
+                        case 0:
+                            breakdown.par = breakdown.par + 1;
+                            break;
+                        case 1:
+                            breakdown.bogey = breakdown.bogey + 1;
+                            break;
+                        case 2:
+                            breakdown.double = breakdown.double + 1;
+                            break;
+                        default:
+                            breakdown.plus = breakdown.plus + 1;
+                            break;
+                    }
+                }
+            })
+            setScoreBreakdown(breakdown);
             setDisc(mostUsedDisc)
             setShotType(mostUsedShotType);
             setLastDrive(drives[0]);
@@ -92,11 +137,16 @@ export const HoleDetails = () => {
                     <hr />
                     <div className="row">
                         <p className="text-left mx-3"><strong>Last throw:</strong> {lastDrive.disc.name} {lastDrive.shotType.label} {lastDrive.shotSelection.label}</p>
-                        <p className="text-left"><strong>Result:</strong> {lastDrive.qualityOfShot.label}</p>
+                        <p className="text-left mx-3"><strong>Result:</strong> {lastDrive.qualityOfShot.label}</p>
                     </div>
                     <hr />
                 </>
             }
+            {scoreBreakdown && (
+                <div className="mx-0" style={{ position: "relative", width: "95vw", height: "18em" }}>
+                    <ScoreBar scoreBreakdown={scoreBreakdown} />
+                </div>
+            )}
             <Button color="danger" className="mt-4" block={width < 992} onClick={handleStart}>Start Hole</Button><br />
             <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
         </div>

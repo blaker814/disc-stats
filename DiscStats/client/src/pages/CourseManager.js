@@ -32,15 +32,15 @@ export const CourseManager = () => {
 
     return (
         <>
-            <div className="row">
-                {location.pathname.includes("scorecards") && (
-                    <Link to={"/scorecards"} className="mt-4 ml-5 d-none d-md-flex">
-                        <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
-                    </Link>
-                )}
-                <CourseSearch onSearch={setCourses} />
-            </div>
             <div className="container">
+                <div className="row">
+                    {location.pathname.includes("scorecards") && (
+                        <Link to={"/scorecards"} className="mt-4 ml-5 d-none d-md-flex">
+                            <FontAwesomeIcon size="lg" className="ml-2 text-secondary cancel" icon={faArrowLeft} />
+                        </Link>
+                    )}
+                    <CourseSearch onSearch={setCourses} />
+                </div>
                 <h2>{location.pathname.includes("scorecards") ? "Choose Course" : "Courses"}</h2>
                 <div className="row justify-content-center">
                     {

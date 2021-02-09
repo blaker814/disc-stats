@@ -45,7 +45,6 @@ export const Navigation = () => {
         });
     };
 
-
     return (
         < div >
             {/* Top Bar*/}
@@ -81,7 +80,7 @@ export const Navigation = () => {
                         </NavItem>
                     </Nav>
                 )}
-                {(user && location.pathname.includes("/overview/edit")) && (
+                {/* {(user && location.pathname.includes("/overview/edit")) && (
                     <Nav className="mr-auto d-flex d-md-none" navbar>
                         <NavItem>
                             <NavLink onClick={() => {
@@ -108,7 +107,7 @@ export const Navigation = () => {
                             </NavLink>
                         </NavItem>
                     </Nav>
-                )}
+                )} */}
                 <NavbarBrand tag={Link} to="/">
                     <img
                         id="header-logo"

@@ -93,11 +93,11 @@ export const RoundOverview = () => {
 
     return (
         <div className="container mt-4 mb-5">
-            {location.pathname.includes("/edit") &&
+            {/* {location.pathname.includes("/edit") &&
                 <Link to={`/scorecards`} className="row d-none d-md-flex">
                     <FontAwesomeIcon size="lg" className="mr-auto mt-1 ml-2 text-secondary cancel" icon={faArrowLeft} />
                 </Link>
-            }
+            } */}
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>

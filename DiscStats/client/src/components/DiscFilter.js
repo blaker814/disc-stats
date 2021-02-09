@@ -16,7 +16,7 @@ export const DiscFilter = ({ searchTerms, setSearchTerms }) => {
                 onChange={e => setSearchTerms(e.target.value)}
             />
             <span className="input-group-append">
-                <div className="input-group-text bg-transparent"><FontAwesomeIcon icon={faSearch} /></div>
+                <div className="input-group-text bg-transparent border-left-0"><FontAwesomeIcon icon={faSearch} /></div>
             </span>
         </Form>
     )
