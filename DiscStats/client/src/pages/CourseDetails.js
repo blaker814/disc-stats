@@ -289,7 +289,7 @@ export const CourseDetails = () => {
                                     }
                                 </Input>
                             </FormGroup>
-                            <Button color="danger" type="submit" block={width < 992}>Start Round</Button>
+                            <Button color="danger" type="submit" block={width < 768}>Start Round</Button>
                         </Form>
                     </div>
                 )}

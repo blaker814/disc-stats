@@ -5,7 +5,7 @@ export const HoleCard = ({ hole, params, strokes }) => {
     const score = strokes - hole.par;
 
     return (
-        <Link to={`/scorecards/${params.scorecardId}/${hole.id}/overview/edit`} className="card-link">
+        <Link to={strokes > 0 ? `/scorecards/${params.scorecardId}/${hole.id}/overview/edit` : `/scorecards/${params.scorecardId}/${hole.id}`} className="card-link">
             <Card className="bg-light hole-card mobile-card">
                 <h5 className="card-header"><strong>Hole {hole.number}</strong></h5>
                 <div className="col-12 py-3 card-body">
