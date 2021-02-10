@@ -57,7 +57,7 @@ namespace DiscStats
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString(BuildConnectionString())));
+                    options.UseNpgsql(BuildConnectionString()));
             }
 
             services.AddControllers()
