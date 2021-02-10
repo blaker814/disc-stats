@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiscStats.Models
 {
+    [Table("scorecard")]
     public class Scorecard
     {
         public int Id { get; set; }

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiscStats.Models
 {
-    public class ShotRange
+    [Table("conditions")]
+    public class Conditions
     {
         public int Id { get; set; }
 

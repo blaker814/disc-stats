@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiscStats.Models
 {
-    public class Conditions
+    [Table("disctype")]
+    public class DiscType
     {
         public int Id { get; set; }
 

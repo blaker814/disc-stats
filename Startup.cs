@@ -10,14 +10,18 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System;
+using System.IO;
 
 namespace DiscStats
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,7 +33,7 @@ namespace DiscStats
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
 
             services.AddTransient<IUserRepository, UserRepository>();
-
+            
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -44,8 +48,18 @@ namespace DiscStats
                         ValidateLifetime = true
                     };
                 });
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            if (_env.IsDevelopment())
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseNpgsql(Configuration.GetConnectionString(BuildConnectionString())));
+            }
+
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
@@ -78,6 +92,16 @@ namespace DiscStats
             }
 
             app.UseHttpsRedirection();
+            app.Use(async (context, next) =>
+            {
+                await next();
+                var path = context.Request.Path.Value;
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(path) && !path.StartsWith("/api"))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
 
             app.UseRouting();
 
@@ -88,6 +112,17 @@ namespace DiscStats
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private string BuildConnectionString()
+        {
+            var server = Environment.GetEnvironmentVariable("DB_HOST");
+            var port = Environment.GetEnvironmentVariable("DB_PORT");
+            var database = Environment.GetEnvironmentVariable("DB_NAME");
+            var userId = Environment.GetEnvironmentVariable("USER_ID");
+            var password = Environment.GetEnvironmentVariable("PASSSWORD");
+
+            return $"Server={server};Port={port};Database={database};User Id={userId};Password={password}";
         }
     }
 }
