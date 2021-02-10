@@ -56,8 +56,7 @@ namespace DiscStats
             }
             else
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(BuildConnectionString()));
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(BuildConnectionString()));
             }
 
             services.AddControllers()
@@ -91,7 +90,7 @@ namespace DiscStats
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DiscStats v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.Use(async (context, next) =>
             {
                 await next();
@@ -102,6 +101,8 @@ namespace DiscStats
                     await next();
                 }
             });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
