@@ -112,7 +112,7 @@ namespace DiscStats.Controllers
         [HttpGet("hole/{id}/{scorecardId}")]
         public IActionResult GetByHoleAndScorecardId(int id, int scorecardId)
         {
-            var scorecard = _scorecardRepo.GetById(id);
+            var scorecard = _scorecardRepo.GetById(scorecardId);
             if (scorecard == null)
             {
                 return NotFound();
