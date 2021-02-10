@@ -120,7 +120,7 @@ namespace DiscStats
             var port = Environment.GetEnvironmentVariable("DB_PORT");
             var database = Environment.GetEnvironmentVariable("DB_NAME");
             var userId = Environment.GetEnvironmentVariable("USER_ID");
-            var password = Environment.GetEnvironmentVariable("PASSSWORD");
+            var password = Environment.GetEnvironmentVariable("PASSWORD");
 
             return $"Server={server};Port={port};Database={database};User Id={userId};Password={password}";
         }
