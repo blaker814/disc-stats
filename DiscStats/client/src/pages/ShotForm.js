@@ -51,7 +51,6 @@ export const ShotForm = () => {
             getShotById();
             setIsLoading(false);
         } else {
-            setIsLoading(false);
             setShot({
                 qualityOfShotId: 0,
                 discId: 0,
@@ -60,6 +59,7 @@ export const ShotForm = () => {
                 shotSelectionId: 0,
                 isObstructed: false
             });
+            setIsLoading(false);
         }
     }, [params.shotId]);
 
@@ -179,7 +179,6 @@ export const ShotForm = () => {
         } else {
             setIsLoading(true);
             if (params.shotId) {
-                console.log(shot)
                 updateShot({
                     id: shot.id,
                     scorecardId: params.scorecardId,

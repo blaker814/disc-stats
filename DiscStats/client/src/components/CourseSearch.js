@@ -32,7 +32,7 @@ const CourseSearch = ({ onSearch }) => {
             <Input value={searchTerms}
                 className="border-right-0"
                 placeholder="Search for course"
-                onChange={e => setSearchTerms(e.target.value)}
+                onChange={e => setSearchTerms(e.target.value.trim().toLowerCase())}
             />
             <span className="input-group-append">
                 <div className="input-group-text bg-transparent border-left-0"><FontAwesomeIcon icon={faSearch} /></div>

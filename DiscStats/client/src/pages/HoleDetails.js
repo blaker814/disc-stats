@@ -1,6 +1,6 @@
 import { Button } from "reactstrap";
 import { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 import useWindowDimensions from "../utils/getWindowDimensions";
 import groupBy from "../utils/groupBy";
@@ -117,6 +117,17 @@ export const HoleDetails = () => {
         history.push(`/scorecards/${params.scorecardId}/${params.holeId}/shot/1`)
     }
 
+    if (!hole?.id) {
+        return (
+            <div className="container mt-5">
+                <h1>Not Found</h1>
+                <Button block={width < 768} color="secondary" className="mt-5">
+                    <Link style={{ color: "white" }} to={"/scorecards"}>Go Back</Link>
+                </Button>
+            </div>
+        );
+    }
+
     return (
         <div className="mt-4">
             <div className="container">
@@ -150,8 +161,8 @@ export const HoleDetails = () => {
                 </div>
             )}
             <div className="container mb-4">
-                <Button color="danger" className="mt-4" block={width < 992} onClick={handleStart}>Start Hole</Button><br />
-                <Button color="primary" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
+                <Button color="danger" className="mt-3" block={width < 992} onClick={handleStart}>Start Hole</Button><br />
+                <Button color="primary" className="mt-3" block={width < 992} onClick={() => history.push(`/scorecards/${params.scorecardId}/overview`)}>Finish Round</Button>
             </div>
         </div>
     );

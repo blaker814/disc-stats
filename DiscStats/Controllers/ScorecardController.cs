@@ -3,6 +3,7 @@ using DiscStats.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace DiscStats.Controllers
@@ -14,10 +15,12 @@ namespace DiscStats.Controllers
     {
         private readonly IScorecardRepository _scorecardRepo;
         private readonly IUserRepository _userRepo;
-        public ScorecardController(IScorecardRepository scorecardRepo, IUserRepository userRepo)
+        private readonly IShotRepository _shotRepo;
+        public ScorecardController(IScorecardRepository scorecardRepo, IUserRepository userRepo, IShotRepository shotRepo)
         {
             _scorecardRepo = scorecardRepo;
             _userRepo = userRepo;
+            _shotRepo = shotRepo;
         }
 
         [HttpGet("user/{id}")]
@@ -48,7 +51,13 @@ namespace DiscStats.Controllers
                 return NotFound();
             }
 
-            return Ok(scorecards);
+            var filteredScorecards = scorecards.Where(s =>
+            {
+                var scorecardShots = _shotRepo.GetByScorecardId(s.Id);
+                return scorecardShots.Count > 0;
+            });
+
+            return Ok(filteredScorecards);
         }
 
         [HttpGet("{id}")]

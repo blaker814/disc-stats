@@ -106,7 +106,7 @@ export const Home = () => {
             <h3>Welcome {currentUser.name}</h3>
             <div className="row justify-content-center">
                 <p className="stat">Rounds played: {scorecards.length}</p>
-                <p className="stat">Avg Score: {average < 0 ? average : average === 0 ? "E" : `+${average}`}</p>
+                <p className="stat">Avg Score: {!average ? "N/A" : average < 0 ? average : average === 0 ? "E" : `+${average}`}</p>
             </div>
             {scoreBreakdown && (
                 <div className="ml-n5" style={{ position: "relative", width: "95vw", height: "18em" }}>

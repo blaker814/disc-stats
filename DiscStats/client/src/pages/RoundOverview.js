@@ -93,7 +93,7 @@ export const RoundOverview = () => {
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>
-                <p className="text-left"><strong>Total Score:</strong> {roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
+                <p className="text-left"><strong>Total Score:</strong> {!roundScore ? "N/A" : roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
             </div>
             <div className="row justify-content-center">
                 {shots.length > 0 &&
