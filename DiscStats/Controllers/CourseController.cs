@@ -43,7 +43,7 @@ namespace DiscStats.Controllers
                 return Ok(_courseRepo.GetRecentCourses(userId));
             }
 
-            return Ok(_courseRepo.Search(q));
+            return Ok(_courseRepo.Search(q.Trim().ToLower()));
         }
     }
 }

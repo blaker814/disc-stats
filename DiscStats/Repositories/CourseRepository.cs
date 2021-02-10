@@ -42,7 +42,7 @@ namespace DiscStats.Repositories
         public List<Course> Search(string criterion)
         {
             return _context.Course
-                .Where(c => c.Name.Contains(criterion) || c.Location.Contains(criterion))
+                .Where(c => c.Name.ToLower().Contains(criterion) || c.Location.ToLower().Contains(criterion))
                 .ToList();
         }
     }
