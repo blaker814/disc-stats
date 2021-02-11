@@ -14,7 +14,7 @@ const CourseSearch = ({ onSearch }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         getToken().then((token) =>
-            fetch(`/api/course/${currentUserId}/search?q=${searchTerms}`, {
+            fetch(`/api/course/${currentUserId}/search?q=${searchTerms.trim().toLowerCase()}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}` // The token gets added to the Authorization header
@@ -32,7 +32,7 @@ const CourseSearch = ({ onSearch }) => {
             <Input value={searchTerms}
                 className="border-right-0"
                 placeholder="Search for course"
-                onChange={e => setSearchTerms(e.target.value.trim().toLowerCase())}
+                onChange={e => setSearchTerms(e.target.value)}
             />
             <span className="input-group-append">
                 <div className="input-group-text bg-transparent border-left-0"><FontAwesomeIcon icon={faSearch} /></div>

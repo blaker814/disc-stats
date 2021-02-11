@@ -39,12 +39,16 @@ export const CourseManager = () => {
                 </div>
                 <h2>{location.pathname.includes("scorecards") ? "Choose Course" : "Courses"}</h2>
                 <div className="row justify-content-center">
-                    {
+                    {courses.length ?
                         courses.map(course => (
                             <div key={course.id} className="m-4">
                                 <CourseCard course={course} />
                             </div>
                         ))
+                        :
+                        <div className="m-4">
+                            <p>No results found</p>
+                        </div>
                     }
                 </div>
             </div>

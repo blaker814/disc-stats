@@ -204,7 +204,7 @@ export const DiscForm = () => {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="content">
-                        Plastic
+                        Plastic Type
                     </Label>
                     <Input
                         type="text"
@@ -216,7 +216,7 @@ export const DiscForm = () => {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="content">
-                        Weight
+                        Weight (grams)
                     </Label>
                     <Input
                         type="number"
