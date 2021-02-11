@@ -28,11 +28,11 @@ export const CourseCard = ({ course }) => {
             <Card className="course-card bg-light mobile-card">
                 <h5 className="card-header"><strong>{course.name}</strong></h5>
                 <div className="col-12 py-3 card-body">
-                    <p className="text-left no wrap ml-3"><strong>Location:</strong> {course.location}</p>
+                    <p className="text-left no-wrap"><strong>Location:</strong> {course.location}</p>
                     <div className="mb-3 description" style={{ position: "relative" }}>
-                        <p className="text-left ml-3 line-clamp"><strong>Decription:</strong> {course.description}</p>
+                        <p className="text-left line-clamp"><strong>Decription:</strong> {course.description}</p>
                     </div>
-                    <p className="text-left ml-3"><strong>Times Played:</strong> {timesPlayed.length}</p>
+                    <p className="text-left "><strong>Times Played:</strong> {timesPlayed.length}</p>
                 </div>
             </Card >
         </Link>

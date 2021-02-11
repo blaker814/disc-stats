@@ -204,12 +204,12 @@ export const DiscForm = () => {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="content">
-                        Plastic Type
+                        Plastic
                     </Label>
                     <Input
                         type="text"
                         name="plastic"
-                        placeholder="Plastic"
+                        placeholder="Plastic type"
                         onChange={handleControlledInputChange}
                         defaultValue={disc?.plastic}
                     />
@@ -221,6 +221,7 @@ export const DiscForm = () => {
                     <Input
                         type="number"
                         name="weight"
+                        min="1"
                         onChange={handleControlledInputChange}
                         defaultValue={disc?.weight}
                     />

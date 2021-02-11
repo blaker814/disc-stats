@@ -10,7 +10,7 @@ export const RoundOverview = () => {
     const [scorecard, setScorecard] = useState();
     const [holes, setHoles] = useState([]);
     const [shots, setShots] = useState([]);
-    const [roundScore, setRoundScore] = useState();
+    const [roundScore, setRoundScore] = useState(null);
     const [pendingDelete, setPendingDelete] = useState(false);
     const params = useParams();
     const history = useHistory();
@@ -93,7 +93,7 @@ export const RoundOverview = () => {
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>
-                <p className="text-left"><strong>Total Score:</strong> {!roundScore ? "N/A" : roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
+                <p className="text-left"><strong>Total Score:</strong> {roundScore === null ? "N/A" : roundScore < 0 ? roundScore : roundScore === 0 ? "E" : `+${roundScore}`}</p>
             </div>
             <div className="row justify-content-center">
                 {shots.length > 0 &&

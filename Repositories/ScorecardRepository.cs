@@ -20,7 +20,9 @@ namespace DiscStats.Repositories
             return _context.Scorecard
                 .Include(s => s.Course)
                 .Include(s => s.Conditions)
-                .Where(s => s.UserId == id).ToList();
+                .Where(s => s.UserId == id)
+                .OrderByDescending(s => s.CreateDateTime)
+                .ToList();
         }
 
         public List<Scorecard> GetByCourseId(int id, int userId)

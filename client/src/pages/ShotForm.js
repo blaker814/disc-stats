@@ -41,6 +41,7 @@ export const ShotForm = () => {
                     return res.json();
                 })
                 .then((data) => {
+                    setIsChecked(data.isObstructed)
                     setShot(data);
                 })
         );
@@ -189,7 +190,7 @@ export const ShotForm = () => {
                     shotRangeId: shot.shotRangeId,
                     shotTypeId: shot.shotTypeId,
                     shotSelectionId: shot.shotSelectionId,
-                    isObstructed: !isChecked
+                    isObstructed: isChecked
                 })
             } else {
                 addShot({
@@ -201,7 +202,7 @@ export const ShotForm = () => {
                     shotRangeId: shot.shotRangeId,
                     shotTypeId: shot.shotTypeId,
                     shotSelectionId: shot.shotSelectionId,
-                    isObstructed: !isChecked
+                    isObstructed: isChecked
                 }, false)
             }
         }
@@ -222,7 +223,7 @@ export const ShotForm = () => {
                 shotRangeId: shot.shotRangeId,
                 shotTypeId: shot.shotTypeId,
                 shotSelectionId: shot.shotSelectionId,
-                isObstructed: !isChecked
+                isObstructed: isChecked
             }, true)
         }
     }

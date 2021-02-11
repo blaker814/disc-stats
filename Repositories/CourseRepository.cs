@@ -17,7 +17,10 @@ namespace DiscStats.Repositories
 
         public List<Course> Get()
         {
-            return _context.Course.OrderBy(c => c.Name).ToList();
+            return _context.Course
+                .OrderBy(c => c.Name)
+                .Take(9)
+                .ToList();
         }
 
         public Course GetById(int id)
@@ -35,7 +38,7 @@ namespace DiscStats.Repositories
 
             return recentScorecards.Select(s => s.Course)
                 .Distinct()
-                .Take(5)
+                .Take(6)
                 .ToList();
         }
 

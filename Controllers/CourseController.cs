@@ -35,12 +35,12 @@ namespace DiscStats.Controllers
             return Ok(recentCourses);
         }
 
-        [HttpGet("{userId}/search")]
-        public IActionResult Search(int userId, string q)
+        [HttpGet("search")]
+        public IActionResult Search(string q)
         {
             if (q == null)
             {
-                return Ok(_courseRepo.GetRecentCourses(userId));
+                return Ok(_courseRepo.Get());
             }
 
             return Ok(_courseRepo.Search(q.Trim().ToLower()));

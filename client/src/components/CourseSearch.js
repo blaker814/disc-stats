@@ -9,12 +9,11 @@ const CourseSearch = ({ onSearch }) => {
     const { getToken } = useContext(UserContext);
     const [searchTerms, setSearchTerms] = useState("");
     const { width } = useWindowDimensions();
-    const currentUserId = JSON.parse(localStorage.getItem("user")).id;
 
     const handleSubmit = (e) => {
         e.preventDefault();
         getToken().then((token) =>
-            fetch(`/api/course/${currentUserId}/search?q=${searchTerms.trim().toLowerCase()}`, {
+            fetch(`/api/course/search?q=${searchTerms.trim().toLowerCase()}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}` // The token gets added to the Authorization header
