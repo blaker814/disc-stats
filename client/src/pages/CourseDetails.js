@@ -264,7 +264,7 @@ export const CourseDetails = () => {
                     </div>
                 )}
                 {location.pathname.includes("scorecards") && (
-                    <div className="container">
+                    <div className="container mb-5">
                         <Form className={width > 576 ? (width < 992 ? "my-4 mx-auto w-75" : "mt-4 mx-auto w-25") : "my-4 mx-3"}
                             onSubmit={handleSubmit}
                         >

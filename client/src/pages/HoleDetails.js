@@ -119,7 +119,7 @@ export const HoleDetails = () => {
 
     if (!hole?.id) {
         return (
-            <div className="container mt-5">
+            <div className="container my-5">
                 <h1>Not Found</h1>
                 <Button block={width < 768} color="secondary" className="mt-5">
                     <Link style={{ color: "white" }} to={"/scorecards"}>Go Back</Link>

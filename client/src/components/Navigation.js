@@ -142,7 +142,7 @@ export const Navigation = () => {
 
             {/* Bottom Tab Navigator*/}
             {user && (
-                <Navbar className="fixed-bottom navbar-light bg-light d-block d-lg-none">
+                <Navbar className="fixed-bottom navbar-light bg-light d-block d-lg-none mt-5">
                     <Nav className="d-flex flex-row justify-content-around w-100" navbar>
                         {
                             tabs.map((tab, index) => (

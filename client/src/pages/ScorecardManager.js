@@ -29,7 +29,7 @@ export const ScorecardManager = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
+        <div className="container my-5">
             <h2>Scorecards</h2>
             <Button type="button"
                 block={width < 992}
