@@ -3,7 +3,8 @@ INSERT INTO [User]
   ([Id], [Name], [Email], [FirebaseUserId])
 VALUES 
   (1, 'Rick', 'rick@mail.com', 'ziDhK8laHaMNnRGckNdUB9mQvqV2'),
-  (2, 'Morgan', 'morgan@mail.com', 'GnBP8stdEnNEVQJZQ9QAL7C3BAq1');
+  (2, 'Morgan', 'morgan@mail.com', 'GnBP8stdEnNEVQJZQ9QAL7C3BAq1'),
+  (3, 'Simon', 'simon@mail.com', 'vgd18v2ubfhLcu6YIv9T9R7ZYtA2');
 SET IDENTITY_INSERT [User] OFF
 
 
