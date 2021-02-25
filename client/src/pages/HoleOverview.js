@@ -57,7 +57,7 @@ export const HoleOverview = () => {
     }
 
     return (
-        <div className="container mt-4 mb-5">
+        <div className="container mt-4 mb-5 pb-5">
             <h3 className="mt-3">Hole {hole.number} Overview</h3>
             <div>
                 <p className="text-left"><strong>Par:</strong> {hole.par}</p>

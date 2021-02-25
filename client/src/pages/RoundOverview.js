@@ -89,7 +89,7 @@ export const RoundOverview = () => {
     };
 
     return (
-        <div className="container mt-4 mb-5">
+        <div className="container mt-4 mb-5 pb-5">
             <h3>Round Overview</h3>
             <div>
                 <p className="text-left"><strong>Course:</strong> {scorecard?.course.name}</p>

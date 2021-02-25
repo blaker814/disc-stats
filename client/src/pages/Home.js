@@ -102,7 +102,7 @@ export const Home = () => {
     }, [roundScores])
 
     return (
-        <div className="m-5">
+        <div className="m-5 pb-5">
             <h3>Welcome {currentUser.name}</h3>
             <div className="row justify-content-center">
                 <p className="stat">Rounds played: {scorecards.length}</p>

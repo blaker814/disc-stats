@@ -28,7 +28,7 @@ export const CourseManager = () => {
 
     return (
         <>
-            <div className="container mb-5">
+            <div className="container mb-5 pb-5">
                 <div className="row">
                     {location.pathname.includes("scorecards") && (
                         <Link to={"/scorecards"} className="mt-4 ml-5 d-none d-md-flex">

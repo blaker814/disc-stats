@@ -253,7 +253,7 @@ export const ShotForm = () => {
     }
 
     return (
-        <div className={width < 768 ? "container my-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
+        <div className={width < 768 ? "container my-5 pb-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
             <Link to={params.shotId ? `/scorecards/${params.scorecardId}/${params.holeId}/overview` : `/scorecards/${params.scorecardId}/${params.holeId}`} className="row d-none d-md-flex" disabled={isLoading}>
                 <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
             </Link>

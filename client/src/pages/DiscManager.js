@@ -46,7 +46,7 @@ export const DiscManager = () => {
 
     return (
         <>
-            <div className="container mb-5">
+            <div className="container mb-5 pb-5">
                 <div className="row">
                     <DiscFilter searchTerms={searchTerms} setSearchTerms={setSearchTerms} />
                 </div>
