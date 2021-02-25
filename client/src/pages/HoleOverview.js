@@ -60,6 +60,7 @@ export const HoleOverview = () => {
         <div className="container mt-4 mb-5">
             <h3 className="mt-3">Hole {hole.number} Overview</h3>
             <div>
+                <p className="text-left"><strong>Par:</strong> {hole.par}</p>
                 <p className="text-left"><strong>Total strokes:</strong> {shots.length + shots.filter(shot => shot.qualityOfShotId === 4).length}</p>
                 <p className="text-left"><strong>Penalty strokes:</strong> {shots.filter(shot => shot.qualityOfShotId === 4).length}</p>
             </div>
