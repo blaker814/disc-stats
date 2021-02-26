@@ -47,13 +47,13 @@ export const DiscForm = () => {
             getDiscById();
             setIsLoading(false);
         } else {
-            setIsLoading(false);
             setDisc({
                 name: "",
                 weight: 0,
                 plastic: "",
                 discTypeId: 0
             });
+            setIsLoading(false);
         }
     }, [discId]);
 

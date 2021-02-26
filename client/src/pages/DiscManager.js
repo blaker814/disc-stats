@@ -10,6 +10,7 @@ export const DiscManager = () => {
     const [discs, setDiscs] = useState([]);
     const [searchTerms, setSearchTerms] = useState("");
     const [filtered, setFiltered] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { getToken } = useContext(UserContext);
     const { width } = useWindowDimensions();
     const history = useHistory();
@@ -37,10 +38,12 @@ export const DiscManager = () => {
             const subset = discs.filter(disc => {
                 return disc.name.toLowerCase().includes(searchTerms.toLowerCase())
             })
-            setFiltered(subset)
+            setFiltered(subset);
+            setIsLoading(false);
         } else {
             // If the search field is blank, display all user friends
-            setFiltered(discs)
+            setFiltered(discs);
+            setIsLoading(false);
         }
     }, [searchTerms, discs])
 
@@ -53,6 +56,7 @@ export const DiscManager = () => {
                 <h2>Discs</h2>
                 <Button type="button"
                     block={width < 992}
+                    disabled={isLoading}
                     onClick={() => history.push("/discs/add")}
                     color="danger">Add Disc</Button>
                 <div className="row justify-content-center">
@@ -60,7 +64,7 @@ export const DiscManager = () => {
                         filtered.map(disc => {
                             return (
                                 <div key={disc.id} className="m-4">
-                                    <DiscCard disc={disc} />
+                                    <DiscCard disc={disc} isLoading={isLoading} />
                                 </div>
                             )
                         })

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card } from "reactstrap";
 import { UserContext } from "../providers/UserProvider";
 
-export const DiscCard = ({ disc }) => {
+export const DiscCard = ({ disc, isLoading }) => {
     const { getToken } = useContext(UserContext);
     const [discShots, setDiscShots] = useState([]);
 
@@ -23,7 +23,7 @@ export const DiscCard = ({ disc }) => {
     }, [])
 
     return (
-        <Link to={`/discs/edit/${disc.id}`} className="card-link">
+        <Link to={`/discs/edit/${disc.id}`} className="card-link" disabled={isLoading}>
             <Card className="bg-light mobile-card">
                 <h5 className="card-header"><strong>{disc.name}</strong></h5>
                 <div className="col-12 py-3 card-body">
