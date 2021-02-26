@@ -129,7 +129,7 @@ export const HoleDetails = () => {
     }
 
     return (
-        <div className="mt-4">
+        <div className="mt-4 pb-5">
             <div className="container">
                 {hole &&
                     <>

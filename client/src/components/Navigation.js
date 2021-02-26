@@ -44,7 +44,7 @@ export const Navigation = () => {
     };
 
     return (
-        < div >
+        < div className="container">
             {/* Top Bar*/}
             <Navbar className="navbar-dark fixed-top bg-primary d-flex justify-content-center justify-content-lg-start" expand="md">
                 {(user && location.pathname.startsWith("/discs/")) && (

@@ -233,7 +233,7 @@ export const CourseDetails = () => {
 
     return (
         <>
-            <div className="mt-4 mt-md-0">
+            <div className="mt-4 mt-md-0 pb-5">
                 <div className="container">
                     <div className="row">
                         <Link to={location.pathname.includes("scorecards") ? "/scorecards/courses" : "/courses"}

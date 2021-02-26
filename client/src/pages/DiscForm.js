@@ -47,13 +47,13 @@ export const DiscForm = () => {
             getDiscById();
             setIsLoading(false);
         } else {
-            setIsLoading(false);
             setDisc({
                 name: "",
                 weight: 0,
                 plastic: "",
                 discTypeId: 0
             });
+            setIsLoading(false);
         }
     }, [discId]);
 
@@ -159,7 +159,7 @@ export const DiscForm = () => {
     }
 
     return (
-        <div className={width < 768 ? "container my-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
+        <div className={width < 768 ? "container my-5 pb-5" : "container border border-dark my-5 bg-light"} style={{ minWidth: "20em", maxWidth: "25em" }}>
             <Link to={"/discs"} className="row d-none d-md-flex" disabled={isLoading}>
                 <FontAwesomeIcon size="lg" className="ml-auto mt-1 mr-2 text-secondary cancel" icon={faTimes} />
             </Link>
